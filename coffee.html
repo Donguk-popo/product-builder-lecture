@@ -44,28 +44,38 @@
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); text-align: center; }
         .intro-text { text-align: center; margin-bottom: 40px; color: #8d6e63; }
 
-        /* Add Form Style */
         .add-section { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px; border: 2px dashed var(--primary); }
-        .add-section h2 { font-family: 'Jua', sans-serif; margin-top: 0; color: var(--primary); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 20px; }
         .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
         .add-btn { background: var(--primary); color: white; border: none; padding: 0 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
-        /* List Style */
         .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
         .res-card.user-added { background: var(--user-item-bg); border: 2px solid var(--user-item-border); }
         
-        .res-card h3 { margin: 0 0 10px 0; font-size: 1.4rem; color: var(--primary); }
-        .res-card .zone { font-size: 0.85rem; font-weight: bold; background: #efebe9; padding: 3px 8px; border-radius: 5px; color: #5d4037; margin-bottom: 10px; display: inline-block; }
-        .res-card p { font-size: 0.95rem; color: #4e342e; margin-bottom: 20px; }
+        .res-title-btn { background: none; border: none; padding: 0; text-align: left; cursor: pointer; width: 100%; font-family: inherit; }
+        .res-title-btn h3 { margin: 0 0 10px 0; font-size: 1.4rem; color: var(--primary); text-decoration: underline; text-decoration-color: rgba(111,78,55,0.3); transition: 0.2s; }
+        .res-title-btn:hover h3 { opacity: 0.7; }
 
-        /* Vote Buttons */
-        .vote-area { display: flex; gap: 10px; border-top: 1px solid #efebe9; padding-top: 15px; }
+        .res-card .zone { font-size: 0.85rem; font-weight: bold; background: #efebe9; padding: 3px 8px; border-radius: 5px; color: #5d4037; margin-bottom: 10px; display: inline-block; }
+        
+        .vote-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
         .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; transition: all 0.2s; color: inherit; }
-        .vote-btn:hover { background: #fdf5e6; }
-        .vote-btn.up:hover { border-color: #2ed573; color: #2ed573; }
-        .vote-btn.down:hover { border-color: #ff4757; color: #ff4757; }
+        .vote-btn.voted { background: #eee; cursor: not-allowed; opacity: 0.6; }
+        .vote-btn.up:hover:not(.voted) { border-color: #2ed573; color: #2ed573; }
+        .vote-btn.down:hover:not(.voted) { border-color: #ff4757; color: #ff4757; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--white); width: 90%; max-width: 600px; max-height: 80vh; border-radius: 30px; padding: 40px; position: relative; overflow-y: auto; }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
+        
+        .map-btn { display: block; width: 100%; padding: 15px; background: #6f4e37; color: white; text-align: center; text-decoration: none; border-radius: 15px; font-weight: 800; margin: 20px 0; }
+        
+        .review-section { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
+        .review-list { margin-bottom: 20px; max-height: 200px; overflow-y: auto; }
+        .review-item { background: #f1f2f6; padding: 10px 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem; }
+        .review-input-group { display: flex; gap: 10px; }
+        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
         
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
     </style>
@@ -78,122 +88,155 @@
 
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
-        <h1>☕ 화곡동 커피숍 리스트 20+</h1>
-        <p class="intro-text">카공부터 힐링까지, 2기 원우들을 위한 카페 지도</p>
+        <h1>☕ 화곡동 카페 리스트</h1>
+        <p class="intro-text">반도체 장비 2기 원우들의 힐링 아지트 (이름 클릭시 상세정보)</p>
 
-        <!-- 직접 추가하기 칸 -->
         <section class="add-section">
-            <h2>✍️ 나만 아는 아지트 제보하기</h2>
             <div class="form-grid">
                 <input type="text" id="new-cafe-name" placeholder="카페 이름">
-                <input type="text" id="new-cafe-desc" placeholder="추천 이유 (예: 커피가 맛있고 조용함)">
+                <input type="text" id="new-cafe-desc" placeholder="추천 이유">
                 <button class="add-btn" onclick="addNewCafe()">추가하기</button>
             </div>
         </section>
 
-        <div id="cafe-list" class="list-grid">
-            <!-- 리스트 아이템들이 여기에 렌더링됩니다 -->
+        <div id="cafe-list" class="list-grid"></div>
+    </div>
+
+    <!-- Modal Layout -->
+    <div id="cafe-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--primary); font-size: 2.2rem; margin-top: 0;"></h2>
+            <p id="modal-desc" style="font-size: 1.1rem; color: #666;"></p>
+            
+            <a id="modal-map-link" href="#" target="_blank" class="map-btn">📍 네이버 지도로 위치 보기</a>
+
+            <div class="review-section">
+                <h3>💬 원우들 한줄평</h3>
+                <div id="modal-reviews" class="review-list"></div>
+                <div class="review-input-group">
+                    <input type="text" id="review-text" class="review-input" placeholder="카페 후기를 남겨주세요!">
+                    <button class="add-btn" onclick="addReview()">등록</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         const defaultCafes = [
-            { id: 1, name: "투썸플레이스 화곡역점", zone: "화곡역", desc: "공부하기 좋은 넓은 좌석과 맛있는 케이크.", likes: 20, dislikes: 2 },
-            { id: 2, name: "스타벅스 화곡역점", zone: "화곡역", desc: "믿고 가는 스벅, 공부 집중도가 높습니다.", likes: 18, dislikes: 1 },
-            { id: 3, name: "할리스 강서구청점", zone: "강서구청", desc: "카공족의 성지. 좌석 배치가 효율적입니다.", likes: 15, dislikes: 0 },
-            { id: 4, name: "파스쿠찌 화곡역점", zone: "화곡역", desc: "이탈리아 감성 커피와 조용한 분위기.", likes: 12, dislikes: 1 },
-            { id: 5, name: "메가커피 화곡역점", zone: "화곡역", desc: "가성비 갑! 등원 길에 빠르게 픽업하기 좋음.", likes: 25, dislikes: 3 },
-            { id: 6, name: "컴포즈커피 화곡역점", zone: "화곡역", desc: "저렴한 가격에 훌륭한 퀄리티의 아메리카노.", likes: 22, dislikes: 2 },
-            { id: 7, name: "백다방 화곡역점", zone: "화곡역", desc: "시원하고 양 많은 아이스크림과 커피.", likes: 19, dislikes: 1 },
-            { id: 8, name: "이디야 화곡역점", zone: "화곡역", desc: "아늑한 분위기에서 조용히 수다 떨기 좋음.", likes: 14, dislikes: 1 },
-            { id: 9, name: "카페 게이트", zone: "화곡역", desc: "빅사이즈 커피와 다양한 에이드 종류.", likes: 11, dislikes: 0 },
-            { id: 10, name: "더벤티 화곡역점", zone: "화곡역", desc: "보라색 감성의 대용량 가성비 카페.", likes: 13, dislikes: 2 },
-            { id: 11, name: "만랩커피", zone: "화곡동", desc: "스페셜티 커피를 합리적인 가격에 제공.", likes: 9, dislikes: 0 },
-            { id: 12, name: "공차 화곡역점", zone: "화곡역", desc: "쫀득한 타피오카 펄과 달콤한 밀크티.", likes: 17, dislikes: 1 },
-            { id: 13, name: "카페 아에", zone: "화곡동", desc: "깔끔한 캔커피 패키징으로 인기 있는 곳.", likes: 8, dislikes: 0 },
-            { id: 14, name: "카페 설", zone: "강서구청", desc: "감성적인 인테리어와 정성 가득한 디저트.", likes: 10, dislikes: 0 },
-            { id: 15, name: "커피빈 강서구청점", zone: "강서구청", desc: "진한 커피향과 고급스러운 실내 분위기.", likes: 11, dislikes: 1 },
-            { id: 16, name: "설빙 화곡역점", zone: "화곡역", desc: "여름엔 역시 빙수! 동기들과 디저트 타임.", likes: 16, dislikes: 0 },
-            { id: 17, name: "우드진", zone: "화곡/우장산", desc: "우드톤 인테리어가 매력적인 감성 카페.", likes: 14, dislikes: 0 },
-            { id: 18, name: "픽커피", zone: "화곡동", desc: "사장님의 커피 사랑이 느껴지는 드립 커피 전문점.", likes: 7, dislikes: 0 },
-            { id: 19, name: "봉명동내커피", zone: "화곡동", desc: "배달로도 유명한 다양한 간식거리와 커피.", likes: 9, dislikes: 1 },
-            { id: 20, name: "빽다방 강서구청점", zone: "강서구청", desc: "푸짐한 양의 음료와 사라다빵 맛집.", likes: 12, dislikes: 1 }
+            { id: 1, name: "투썸플레이스 화곡역점", zone: "화곡역", desc: "공부하기 좋은 넓은 좌석과 맛있는 케이크." },
+            { id: 2, name: "스타벅스 화곡역점", zone: "화곡역", desc: "믿고 가는 스벅, 공부 집중도가 높습니다." },
+            { id: 3, name: "할리스 강서구청점", zone: "강서구청", desc: "카공족의 성지. 좌석 배치가 효율적입니다." },
+            { id: 4, name: "파스쿠찌 화곡역점", zone: "화곡역", desc: "이탈리아 감성 커피와 조용한 분위기." },
+            { id: 5, name: "메가커피 화곡역점", zone: "화곡역", desc: "가성비 갑! 등원 길에 빠르게 픽업하기 좋음." },
+            { id: 6, name: "컴포즈커피 화곡역점", zone: "화곡역", desc: "저렴한 가격에 훌륭한 퀄리티의 아메리카노." },
+            { id: 7, name: "백다방 화곡역점", zone: "화곡역", desc: "시원하고 양 많은 아이스크림과 커피." },
+            { id: 8, name: "이디야 화곡역점", zone: "화곡역", desc: "아늑한 분위기에서 조용히 수다 떨기 좋음." },
+            { id: 9, name: "카페 게이트", zone: "화곡역", desc: "빅사이즈 커피와 다양한 에이드 종류." },
+            { id: 10, name: "더벤티 화곡역점", zone: "화곡역", desc: "보라색 감성의 대용량 가성비 카페." },
+            { id: 11, name: "만랩커피", zone: "화곡동", desc: "스페셜티 커피를 합리적인 가격에 제공." },
+            { id: 12, name: "공차 화곡역점", zone: "화곡역", desc: "쫀득한 타피오카 펄과 달콤한 밀크티." },
+            { id: 13, name: "카페 아에", zone: "화곡동", desc: "깔끔한 캔커피 패키징으로 인기 있는 곳." },
+            { id: 14, name: "카페 설", zone: "강서구청", desc: "감성적인 인테리어와 정성 가득한 디저트." },
+            { id: 15, name: "커피빈 강서구청점", zone: "강서구청", desc: "진한 커피향과 고급스러운 실내 분위기." },
+            { id: 16, name: "설빙 화곡역점", zone: "화곡역", desc: "여름엔 역시 빙수! 동기들과 디저트 타임." },
+            { id: 17, name: "우드진", zone: "화곡/우장산", desc: "우드톤 인테리어가 매력적인 감성 카페." },
+            { id: 18, name: "픽커피", zone: "화곡동", desc: "사장님의 커피 사랑이 느껴지는 드립 커피 전문점." },
+            { id: 19, name: "봉명동내커피", zone: "화곡동", desc: "배달로도 유명한 다양한 간식거리와 커피." },
+            { id: 20, name: "빽다방 강서구청점", zone: "강서구청", desc: "푸짐한 양의 음료와 사라다빵 맛집." }
         ];
 
-        let userCafes = JSON.parse(localStorage.getItem('userCafes')) || [];
+        let state = JSON.parse(localStorage.getItem('cafeState')) || {
+            userAdded: [],
+            votes: {},
+            votedIds: [],
+            reviews: {}
+        };
 
-        function renderCafeList() {
+        let currentActiveId = null;
+
+        function saveState() { localStorage.setItem('cafeState', JSON.stringify(state)); }
+
+        function renderList() {
             const listEl = document.getElementById('cafe-list');
             listEl.innerHTML = '';
-
-            defaultCafes.forEach(item => {
-                listEl.appendChild(createCafeCard(item, false));
+            [...defaultCafes, ...state.userAdded].forEach(item => {
+                const voteInfo = state.votes[item.id] || { up: 0, down: 0 };
+                const hasVoted = state.votedIds.includes(String(item.id));
+                const card = document.createElement('div');
+                card.className = `res-card ${item.id.toString().startsWith('u') ? 'user-added' : ''}`;
+                card.innerHTML = `
+                    <div>
+                        <span class="zone">${item.zone || '학생 제보'}</span>
+                        <button class="res-title-btn" onclick="openModal('${item.id}', '${item.name}', '${item.desc}')">
+                            <h3>${item.name}</h3>
+                        </button>
+                        <p>${item.desc.substring(0, 40)}...</p>
+                    </div>
+                    <div class="vote-area">
+                        <button class="vote-btn up ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${voteInfo.up}</span></button>
+                        <button class="vote-btn down ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${voteInfo.down}</span></button>
+                    </div>
+                `;
+                listEl.appendChild(card);
             });
-
-            userCafes.forEach(item => {
-                listEl.appendChild(createCafeCard(item, true));
-            });
-        }
-
-        function createCafeCard(item, isUser) {
-            const card = document.createElement('div');
-            card.className = `res-card ${isUser ? 'user-added' : ''}`;
-            card.innerHTML = `
-                <div>
-                    <span class="zone">${item.zone || '학생 제보'}</span>
-                    <h3>${item.name}</h3>
-                    <p>${item.desc}</p>
-                </div>
-                <div class="vote-area">
-                    <button class="vote-btn up" onclick="voteCafe('${item.id}', 'up', ${isUser})">👍 <span>${item.likes}</span></button>
-                    <button class="vote-btn down" onclick="voteCafe('${item.id}', 'down', ${isUser})">👎 <span>${item.dislikes}</span></button>
-                </div>
-            `;
-            return card;
         }
 
         function addNewCafe() {
             const name = document.getElementById('new-cafe-name').value;
             const desc = document.getElementById('new-cafe-desc').value;
-
-            if (!name || !desc) {
-                alert('이름과 추천 이유를 적어주세요!');
-                return;
-            }
-
-            const newItem = {
-                id: 'user-cafe-' + Date.now(),
-                name: name,
-                zone: '학생 제보',
-                desc: desc,
-                likes: 0,
-                dislikes: 0
-            };
-
-            userCafes.push(newItem);
-            localStorage.setItem('userCafes', JSON.stringify(userCafes));
-            renderCafeList();
-
+            if (!name || !desc) return alert('내용을 입력하세요!');
+            const newItem = { id: 'u' + Date.now(), name, desc, zone: '학생 제보' };
+            state.userAdded.push(newItem);
+            saveState();
+            renderList();
             document.getElementById('new-cafe-name').value = '';
             document.getElementById('new-cafe-desc').value = '';
         }
 
-        function voteCafe(id, type, isUser) {
-            const list = isUser ? userCafes : defaultCafes;
-            const item = list.find(i => i.id == id);
-            
-            if (item) {
-                if (type === 'up') item.likes++;
-                else item.dislikes++;
-                
-                if (isUser) {
-                    localStorage.setItem('userCafes', JSON.stringify(userCafes));
-                }
-                renderCafeList();
-            }
+        function vote(id, type) {
+            if (state.votedIds.includes(String(id))) return alert('이미 투표하셨습니다!');
+            if (!state.votes[id]) state.votes[id] = { up: 0, down: 0 };
+            state.votes[id][type]++;
+            state.votedIds.push(String(id));
+            saveState();
+            renderList();
         }
 
-        renderCafeList();
+        function openModal(id, name, desc) {
+            currentActiveId = id;
+            document.getElementById('modal-name').innerText = name;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-map-link').href = `https://search.naver.com/search.naver?query=화곡동+카페+${name}`;
+            renderReviews();
+            document.getElementById('cafe-modal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('cafe-modal').style.display = 'none'; }
+
+        function renderReviews() {
+            const list = document.getElementById('modal-reviews');
+            list.innerHTML = '';
+            (state.reviews[currentActiveId] || []).forEach(rev => {
+                const div = document.createElement('div');
+                div.className = 'review-item';
+                div.innerText = rev;
+                list.appendChild(div);
+            });
+        }
+
+        function addReview() {
+            const text = document.getElementById('review-text').value;
+            if (!text) return;
+            if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
+            state.reviews[currentActiveId].push(text);
+            saveState();
+            renderReviews();
+            document.getElementById('review-text').value = '';
+        }
+
+        window.onclick = (e) => { if(e.target == document.getElementById('cafe-modal')) closeModal(); };
+        renderList();
     </script>
 </body>
 </html>
