@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI 통계 기반 로또 번호 추천기. 매주 행운의 숫자를 확인하고 로또 당첨 확률을 높이는 팁을 확인하세요.">
-    <meta name="keywords" content="로또, 로또번호추천, 로또당첨번호, 행운의숫자, 로또통계">
-    <title>로또 번호 추천기 | 행운을 부르는 숫자 통계</title>
+    <meta name="description" content="강서구 화곡동 현지인이 추천하는 찐 맛집 리스트. 오늘 점심, 저녁 메뉴 고민을 해결해드리는 화곡동 맛집 추천 서비스입니다.">
+    <meta name="keywords" content="화곡동맛집, 화곡역맛집, 까치산역맛집, 강서구맛집, 화곡동데이트, 화곡동회식">
+    <title>화곡동 맛집 리스트 | 오늘 뭐 먹지? 😋</title>
     <style>
         :root {
-            --bg-color: #f4f6f8;
+            --bg-color: #fff9f5;
             --text-color: #2c3e50;
-            --button-bg: #3498db;
-            --button-hover: #2980b9;
-            --ball-bg: #ffcc00;
-            --ball-text: #333;
+            --button-bg: #e67e22;
+            --button-hover: #d35400;
+            --card-bg: #ffffff;
+            --tag-bg: #f39c12;
+            --tag-text: #ffffff;
             --container-bg: #ffffff;
-            --nav-bg: #2c3e50;
+            --nav-bg: #e67e22;
             --nav-text: #ffffff;
         }
 
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
             --text-color: #ecf0f1;
-            --button-bg: #2980b9;
-            --button-hover: #3498db;
-            --ball-bg: #f1c40f;
-            --ball-text: #000;
+            --button-bg: #d35400;
+            --button-hover: #e67e22;
+            --card-bg: #2c3e50;
+            --tag-bg: #e67e22;
+            --tag-text: #ffffff;
             --container-bg: #2c3e50;
             --nav-bg: #000000;
         }
@@ -39,7 +41,6 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
         nav {
             background-color: var(--nav-bg);
             color: var(--nav-text);
@@ -52,13 +53,8 @@
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        nav a {
-            color: var(--nav-text);
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-        }
-        .logo { font-size: 1.5rem; font-weight: bold; }
+        nav a { color: var(--nav-text); text-decoration: none; margin-left: 20px; font-weight: 500; }
+        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
 
         .main-content {
             max-width: 1000px;
@@ -78,7 +74,6 @@
 
         h1 { font-size: 2.5rem; margin-bottom: 20px; }
         
-        /* Info Section */
         .info-section {
             text-align: left;
             margin-top: 50px;
@@ -107,54 +102,51 @@
             color: white;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
         }
         button.generate-btn:hover {
             background-color: var(--button-hover);
             transform: translateY(-2px);
         }
 
-        .numbers {
+        #result {
             margin: 40px 0;
-            min-height: 60px;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .ball {
+        .restaurant-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-out;
+            border: 2px solid var(--button-bg);
+        }
+        .restaurant-card h3 { margin: 0 0 10px; font-size: 1.8rem; color: var(--button-bg); }
+        .restaurant-card p { margin: 5px 0; font-size: 1.1rem; }
+        .tag {
             display: inline-block;
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
-            margin: 8px;
-            border-radius: 50%;
-            background-color: var(--ball-bg);
-            color: var(--ball-text);
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.15);
-            animation: bounce 0.5s ease-out;
-        }
-
-        @keyframes bounce {
-            0% { transform: scale(0) rotate(-45deg); }
-            80% { transform: scale(1.1) rotate(10deg); }
-            100% { transform: scale(1) rotate(0); }
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--nav-bg);
-            color: var(--nav-text);
-            padding: 40px 20px;
-            margin-top: 60px;
-            text-align: center;
-        }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a {
-            color: #bdc3c7;
-            text-decoration: none;
-            margin: 0 10px;
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.9rem;
+            margin-top: 10px;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { background-color: var(--nav-bg); color: var(--nav-text); padding: 40px 20px; margin-top: 60px; text-align: center; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: #f8c291; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
         .footer-links a:hover { color: white; }
 
         .contact-section { max-width: 500px; margin: 40px auto; }
@@ -168,37 +160,43 @@
 <body>
 
     <nav>
-        <div class="logo">🍀 LuckyLotto</div>
+        <div class="logo" onclick="location.href='index.html'">😋 화곡식후경</div>
         <div class="menu">
             <a href="index.html">홈</a>
-            <a href="about.html">서비스 소개</a>
+            <a href="about.html">소개</a>
             <button class="theme-toggle" onclick="toggleTheme()">🌓 테마 변경</button>
         </div>
     </nav>
 
     <div class="main-content">
         <div class="container">
-            <h1>🎯 행운의 로또 번호 추천</h1>
-            <p>오늘의 운세를 바탕으로 분석된 최적의 조합을 확인해보세요.</p>
-            <button class="generate-btn" onclick="generateLotto()">지금 번호 뽑기</button>
-            <div class="numbers" id="result"></div>
+            <h1>🏘️ 화곡동 맛집 랜덤 추천</h1>
+            <p>오늘 화곡동에서 뭐 먹을지 고민되시나요? 검증된 맛집 중 하나를 추천해드려요!</p>
+            <button class="generate-btn" onclick="pickRestaurant()">오늘의 맛집 뽑기</button>
+            <div id="result">
+                <p style="color: #95a5a6;">버튼을 눌러 맛집을 확인하세요!</p>
+            </div>
         </div>
 
         <section class="info-section">
-            <h2>💡 로또 번호 선택 팁</h2>
-            <p>로또 번호를 선택할 때 무작위 추출도 좋지만, 몇 가지 통계적 접근을 고려해볼 수 있습니다:</p>
+            <h2>📍 화곡동 동네별 맛집 특징</h2>
+            <p>강서구 화곡동은 넓은 면적만큼이나 동네별로 뚜렷한 맛집 색깔을 가지고 있습니다.</p>
             <ul>
-                <li><strong>고저 비율 조정:</strong> 1~22 사이의 숫자(저)와 23~45 사이의 숫자(고)를 적절히 섞는 것이 통계적으로 유리합니다.</li>
-                <li><strong>홀짝 균형:</strong> 모든 숫자가 홀수이거나 짝수인 경우보다는 3:3 또는 2:4 비율이 자주 등장합니다.</li>
-                <li><strong>연속 번호 피하기:</strong> 1, 2, 3과 같이 3개 이상의 연속 번호가 나올 확률은 매우 낮습니다.</li>
+                <li><strong>화곡역 주변:</strong> 프랜차이즈와 오래된 노포가 공존하는 곳입니다. 특히 화곡본동시장 내의 영양족발은 전국구급 인기를 자랑합니다.</li>
+                <li><strong>까치산역/복개천:</strong> 고기집과 이자카야, 술집이 밀집해 있어 저녁 약속 장소로 인기가 많습니다. 가성비 좋은 무한리필 집이나 특색 있는 개인 식당이 많습니다.</li>
+                <li><strong>강서구청 인근:</strong> 관공서와 오피스가 밀집해 있어 점심 메뉴가 훌륭한 백반집과 전통 있는 해장국집이 많기로 유명합니다.</li>
             </ul>
 
-            <h2>📝 서비스 이용 안내</h2>
-            <p>본 사이트의 추천 번호는 난수 생성 알고리즘에 기반한 참고용 데이터입니다. 실제 당첨을 보장하지 않으며, 건전한 복권 구매 문화를 권장합니다.</p>
+            <h2>💡 맛집 실패 없는 꿀팁</h2>
+            <p>화곡동 현지인들이 전수하는 맛집 선정 노하우입니다.</p>
+            <ul>
+                <li>시장을 공략하세요! 화곡본동시장, 까치산시장 내 식당들은 오랜 시간 검증된 맛을 자랑합니다.</li>
+                <li>주차 공간을 미리 확인하세요. 화곡동은 골목이 좁아 주차가 어려운 식당이 많으니 공영주차장 위치 파악은 필수입니다.</li>
+            </ul>
         </section>
 
         <div class="container contact-section">
-            <h2>🤝 제휴 및 문의</h2>
+            <h2>✉️ 맛집 제보 및 문의</h2>
             <form action="https://formspree.io/f/xyklpbyb" method="POST">
                 <div class="form-group">
                     <input type="text" name="name" placeholder="성함/업체명" required>
@@ -207,9 +205,9 @@
                     <input type="email" name="_replyto" placeholder="이메일 주소" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="message" rows="4" placeholder="문의 내용을 입력해주세요" required></textarea>
+                    <textarea name="message" rows="4" placeholder="추천하고 싶은 맛집이나 문의 내용을 입력해주세요" required></textarea>
                 </div>
-                <button type="submit" class="generate-btn" style="width: 100%; padding: 12px;">문의 보내기</button>
+                <button type="submit" class="generate-btn" style="width: 100%; padding: 12px;">보내기</button>
             </form>
         </div>
 
@@ -224,10 +222,20 @@
             <a href="privacy.html">개인정보처리방침</a> |
             <a href="terms.html">이용약관</a>
         </div>
-        <p>&copy; 2024 LuckyLotto. All rights reserved.</p>
+        <p>&copy; 2024 화곡식후경. All rights reserved.</p>
     </footer>
 
     <script>
+        const restaurants = [
+            { name: "화곡영양족발", category: "족발/보쌈", desc: "화곡본동시장의 전설, 쫀득하고 따뜻한 족발의 끝판왕", zone: "화곡역" },
+            { name: "광영수산", category: "해물/회", desc: "가성비 넘치는 신선한 회와 푸짐한 스키다시", zone: "까치산역" },
+            { name: "전주뼈해장국", category: "한식/탕", desc: "24시간 끓여낸 진한 국물과 부드러운 살코기", zone: "강서구청" },
+            { name: "대왕곱창", category: "곱창/구이", desc: "잡내 없이 고소한 소곱창과 마지막 볶음밥이 일품", zone: "까치산역" },
+            { name: "오남매닭갈비", category: "닭갈비", desc: "매콤달콤한 양념과 푸짐한 양으로 사랑받는 곳", zone: "화곡역" },
+            { name: "다케", category: "이자카야", desc: "화곡동에서 일본 현지의 맛을 느끼는 감성 술집", zone: "복개천" },
+            { name: "이차돌", category: "고기집", desc: "차돌박이와 쫄면의 환상적인 궁합", zone: "화곡역" }
+        ];
+
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -238,23 +246,22 @@
             localStorage.setItem('theme', newTheme);
         }
 
-        function generateLotto() {
-            let numbers = [];
-            while (numbers.length < 6) {
-                let num = Math.floor(Math.random() * 45) + 1;
-                if (!numbers.includes(num)) numbers.push(num);
-            }
-            numbers.sort((a, b) => a - b);
-            let resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "";
-            numbers.forEach((n, index) => {
-                setTimeout(() => {
-                    let ball = document.createElement("span");
-                    ball.className = "ball";
-                    ball.textContent = n;
-                    resultDiv.appendChild(ball);
-                }, index * 100);
-            });
+        function pickRestaurant() {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "<p>어디가 좋을까 고민 중...</p>";
+            
+            setTimeout(() => {
+                const randomIdx = Math.floor(Math.random() * restaurants.length);
+                const r = restaurants[randomIdx];
+                resultDiv.innerHTML = `
+                    <div class="restaurant-card">
+                        <span class="tag">${r.zone}</span>
+                        <h3>${r.name}</h3>
+                        <p><strong>종류:</strong> ${r.category}</p>
+                        <p>${r.desc}</p>
+                    </div>
+                `;
+            }, 600);
         }
     </script>
 
