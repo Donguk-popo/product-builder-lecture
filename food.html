@@ -21,12 +21,12 @@
     <title>맛집 리스트 | STEC 반도체 장비 2기</title>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Pretendard:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff4757; --stec-blue: #004a99; --bg: #f8f9fa; --white: #ffffff; }
+        :root { --primary: #ff4757; --stec-blue: #004a99; --bg: #f8f9fa; --white: #white; }
         body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; }
         nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; }
         .container { max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: center; }
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); }
-        .pick-box { background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .pick-box { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; }
         button.pick-btn { background: var(--primary); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-family: 'Jua', sans-serif; border-radius: 50px; cursor: pointer; transition: 0.3s; }
         button.pick-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,71,87,0.3); }
         #result { margin-top: 30px; min-height: 150px; }
@@ -35,6 +35,7 @@
         .res-img { height: 200px; background-size: cover; background-position: center; }
         .res-info { padding: 20px; }
         .res-info h3 { margin: 0 0 10px; color: var(--primary); }
+        .res-info .zone { display: inline-block; background: #eee; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem; margin-bottom: 5px; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
     </style>
 </head>
@@ -46,7 +47,7 @@
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>🍱 오늘 점심 뭐 먹지?</h1>
-        <p>학원 주변 동기들이 인정한 찐맛집 리스트</p>
+        <p>학원 주변(화곡역/강서구청) 찐맛집 20선</p>
         <div class="pick-box">
             <button class="pick-btn" onclick="pickFood()">맛집 랜덤 뽑기!</button>
             <div id="result">
@@ -56,9 +57,26 @@
     </div>
     <script>
         const foods = [
-            { name: "화곡영양족발", desc: "시장 안 전설의 족발! 동기들과 소규모 회식으로 최고.", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500" },
-            { name: "전주뼈해장국", desc: "공부하느라 지친 몸, 든든한 국밥으로 충전하세요.", img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?w=500" },
-            { name: "오남매닭갈비", desc: "매콤한 게 당길 때! 볶음밥은 무조건 추가 필수.", img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=500" }
+            { name: "화곡영양족발", zone: "화곡역", desc: "시장 안 전설! 쫀득한 족발과 순대국 서비스.", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500" },
+            { name: "전주뼈해장국", zone: "강서구청", desc: "고기가 산더미처럼 쌓여 나오는 찐 해장 성지.", img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?w=500" },
+            { name: "오남매닭갈비", zone: "화곡역", desc: "철판에서 볶아지는 매콤한 맛! 볶음밥 필수.", img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=500" },
+            { name: "광영수산", zone: "까치산역", desc: "가성비 회 맛집! 푸짐한 스키다시가 특징.", img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db76?w=500" },
+            { name: "대왕곱창", zone: "까치산역", desc: "곱이 꽉 찬 소곱창! 고소함의 끝판왕.", img: "https://images.unsplash.com/photo-1514467958571-770d527a6c77?w=500" },
+            { name: "남도식당", zone: "화곡동", desc: "집밥이 그리울 때 찾는 최고의 백반집.", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500" },
+            { name: "이조면옥", zone: "화곡역", desc: "시원한 함흥냉면과 뜨끈한 왕갈비탕.", img: "https://images.unsplash.com/photo-1534099233039-3fc113a2af60?w=500" },
+            { name: "미담진족", zone: "화곡동", desc: "깔끔한 인테리어와 부드러운 족발의 조화.", img: "https://images.unsplash.com/photo-1593504049359-74330189a355?w=500" },
+            { name: "명륜진사갈비 화곡점", zone: "화곡역", desc: "무한리필 갈비로 동기들과 배 터지게 회식!", img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500" },
+            { name: "서보정", zone: "강서구청", desc: "짬뽕 국물이 끝내주는 전통의 중식당.", img: "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=500" },
+            { name: "정가네 팥칼국수", zone: "화곡동", desc: "진한 팥물과 쫄깃한 면발의 건강한 한 끼.", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500" },
+            { name: "황소곱창", zone: "화곡본동", desc: "잡내 없이 깔끔한 소곱창과 대창.", img: "https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?w=500" },
+            { name: "성순이네 숯불닭갈비", zone: "강서구청", desc: "숯불 향이 가득 밴 부드러운 닭갈비.", img: "https://images.unsplash.com/photo-1532636875304-0c89119d9b4d?w=500" },
+            { name: "백소정 화곡역점", zone: "화곡역", desc: "두툼한 돈카츠와 마제소바 전문점.", img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=500" },
+            { name: "스시현", zone: "화곡역", desc: "합리적인 가격에 즐기는 신선한 초밥 세트.", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500" },
+            { name: "듬박이찌개", zone: "화곡역", desc: "김치찌개와 라면사리 무한리필의 행복.", img: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=500" },
+            { name: "한옥집김치찜", zone: "화곡역", desc: "새콤한 묵은지와 부드러운 돼지고기 찜.", img: "https://images.unsplash.com/photo-1589301773859-6734d0016e3c?w=500" },
+            { name: "맛나분식", zone: "화곡시장", desc: "시장 떡볶이의 정석! 튀김과 순대의 환상 궁합.", img: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=500" },
+            { name: "신월동 탕수육", zone: "신월/화곡", desc: "고기 함량이 높은 바삭한 탕수육 맛집.", img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?w=500" },
+            { name: "본가탕탕이", zone: "강서구청", desc: "낙지 탕탕이와 연포탕으로 기력 보충!", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500" }
         ];
         function pickFood() {
             const r = foods[Math.floor(Math.random() * foods.length)];
@@ -66,6 +84,7 @@
                 <div class="res-card">
                     <div class="res-img" style="background-image: url('${r.img}')"></div>
                     <div class="res-info">
+                        <span class="zone">${r.zone}</span>
                         <h3>${r.name}</h3>
                         <p>${r.desc}</p>
                     </div>
