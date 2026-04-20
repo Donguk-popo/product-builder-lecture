@@ -26,6 +26,8 @@
             --stec-blue: #004a99;
             --bg: #fffcf9;
             --white: #ffffff;
+            --top-bronze: #cd7f32;
+            --top-card-bg: #faf3e0;
             --user-item-bg: #fdf2e9;
             --user-item-border: #e67e22;
         }
@@ -34,22 +36,32 @@
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); text-align: center; }
         .intro-text { text-align: center; margin-bottom: 40px; color: #8d6e63; }
+
+        /* Top 3 Section */
+        .top-section { margin-bottom: 40px; }
+        .top-title { font-family: 'Jua', sans-serif; color: #8d6e63; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .top-badge { background: var(--top-bronze); color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; }
+
         .add-section { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px; border: 2px dashed var(--primary); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 20px; }
         .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
         .add-btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
         .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); }
+        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); position: relative; }
+        .res-card.top-rank { background: var(--top-card-bg); border: 2px solid var(--top-bronze); transform: scale(1.02); }
         .res-card.user-added { background: var(--user-item-bg); border: 2px solid var(--user-item-border); }
+
+        .rank-tag { position: absolute; top: -10px; left: 20px; background: var(--top-bronze); color: white; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
         .res-link { text-decoration: none; display: block; margin-bottom: 10px; }
         .res-link h3 { margin: 0; font-size: 1.4rem; color: var(--primary); text-decoration: underline; text-decoration-color: rgba(111,78,55,0.3); }
         .res-link:hover h3 { opacity: 0.7; }
         .res-card .zone { font-size: 0.85rem; font-weight: bold; background: #efebe9; padding: 3px 8px; border-radius: 5px; color: #5d4037; margin-bottom: 10px; display: inline-block; }
         .res-card p { font-size: 0.95rem; color: #4e342e; margin-bottom: 15px; }
         .action-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; flex-wrap: wrap; }
-        .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; color: inherit; }
-        .vote-btn.voted { background: #eee; cursor: not-allowed; opacity: 0.6; }
-        .review-btn { background: #fdf5e6; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
+        .review-btn { background: #fdf5e6; border: none; padding: 8px 20px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; width: 100%; }
+
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: var(--white); width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px; padding: 35px; position: relative; overflow-y: auto; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
@@ -65,7 +77,14 @@
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>☕ 화곡동 카페 리스트</h1>
-        <p class="intro-text">이름 클릭 시 지도로 바로 이동! '후기' 버튼으로 생각을 공유하세요.</p>
+        <p class="intro-text">화곡역 주변 인기 카페 TOP 3와 수강생 추천 리스트입니다.</p>
+
+        <div class="top-section">
+            <h2 class="top-title">🏆 오늘의 카페 TOP 3 <span class="top-badge">Popular</span></h2>
+            <div id="top-cafe-list" class="list-grid"></div>
+        </div>
+
+        <h2 style="font-family: 'Jua'; margin-top: 50px;">모든 카페 보기</h2>
         <section class="add-section">
             <div class="form-grid">
                 <input type="text" id="new-cafe-name" placeholder="카페 이름">
@@ -75,18 +94,14 @@
         </section>
         <div id="cafe-list" class="list-grid"></div>
     </div>
-    <div id="review-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">&times;</button>
-            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--primary); margin: 0;"></h2>
-            <div id="modal-reviews" class="review-list"></div>
-            <div class="review-input-group">
-                <input type="text" id="review-text" class="review-input" placeholder="카페 후기를 남겨주세요!">
-                <button class="add-btn" style="padding: 10px 20px;" onclick="addReview()">등록</button>
-            </div>
-        </div>
-    </div>
+    <!-- ... (modal code) ... -->
     <script>
+        const topCafes = [
+            { id: 21, name: "체르보 (Cervo)", zone: "화곡역", desc: "화곡역 근처에서 가장 넓고 쾌적한 카페. 깔끔한 인테리어와 조용한 분위기로 카공족에게 강추!", rank: 1 },
+            { id: 22, name: "이층창가", zone: "화곡역", desc: "채광 좋은 감성 카페. 직접 만드는 수제 디저트와 마카롱이 정말 맛있어요.", rank: 2 },
+            { id: 23, name: "일도커피", zone: "화곡동", desc: "감각적인 인테리어와 고소한 라떼가 일품인 핫한 신상 카페.", rank: 3 }
+        ];
+
         const defaultCafes = [
             { id: 1, name: "투썸플레이스 화곡역점", zone: "화곡역", desc: "공부하기 좋은 넓은 좌석과 맛있는 케이크." },
             { id: 2, name: "스타벅스 화곡역점", zone: "화곡역", desc: "믿고 가는 스벅, 공부 집중도가 높습니다." },
@@ -109,21 +124,53 @@
             { id: 19, name: "봉명동내커피", zone: "화곡동", desc: "배달로도 유명한 다양한 간식거리와 커피." },
             { id: 20, name: "빽다방 강서구청점", zone: "강서구청", desc: "푸짐한 양의 음료와 사라다빵 맛집." }
         ];
-        let state = JSON.parse(localStorage.getItem('cafeStateV3')) || { userAdded: [], votes: {}, votedIds: [], reviews: {} };
+
+        let state = JSON.parse(localStorage.getItem('cafeStateV4')) || { userAdded: [], reviews: {} };
         let currentActiveId = null;
-        function saveState() { localStorage.setItem('cafeStateV3', JSON.stringify(state)); }
+
+        function saveState() { localStorage.setItem('cafeStateV4', JSON.stringify(state)); }
+
         function renderList() {
+            const topListEl = document.getElementById('top-cafe-list');
             const listEl = document.getElementById('cafe-list');
+            
+            topListEl.innerHTML = '';
             listEl.innerHTML = '';
+
+            // Render TOP 3
+            topCafes.forEach(item => {
+                const card = createCard(item, true);
+                topListEl.appendChild(card);
+            });
+
+            // Render others
             [...defaultCafes, ...state.userAdded].forEach(item => {
-                const v = state.votes[item.id] || { up: 0, down: 0 };
-                const hasV = state.votedIds.includes(String(item.id));
-                const card = document.createElement('div');
-                card.className = `res-card ${item.id.toString().startsWith('u') ? 'user-added' : ''}`;
-                card.innerHTML = `<div><span class="zone">${item.zone || '학생 제보'}</span><a href="https://search.naver.com/search.naver?query=화곡동+카페+${item.name}" target="_blank" class="res-link"><h3>${item.name}</h3></a><p>${item.desc}</p></div><div class="action-area"><button class="vote-btn up ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${v.up}</span></button><button class="vote-btn down ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${v.down}</span></button><button class="review-btn" onclick="openReviewModal('${item.id}', '${item.name}')">💬 후기</button></div>`;
+                const card = createCard(item, false);
                 listEl.appendChild(card);
             });
         }
+
+        function createCard(item, isTop) {
+            const card = document.createElement('div');
+            card.className = `res-card ${isTop ? 'top-rank' : ''} ${item.id.toString().startsWith('u') ? 'user-added' : ''}`;
+            
+            let rankTag = isTop ? `<div class="rank-tag">TOP ${item.rank}</div>` : '';
+            
+            card.innerHTML = `
+                ${rankTag}
+                <div>
+                    <span class="zone">${item.zone || '학생 제보'}</span>
+                    <a href="https://search.naver.com/search.naver?query=화곡동+카페+${item.name}" target="_blank" class="res-link">
+                        <h3>${item.name}</h3>
+                    </a>
+                    <p>${item.desc}</p>
+                </div>
+                <div class="action-area">
+                    <button class="review-btn" onclick="openReviewModal('${item.id}', '${item.name}')">💬 후기 보기 및 작성</button>
+                </div>`;
+            return card;
+        }
+
         function addNewCafe() {
             const name = document.getElementById('new-cafe-name').value;
             const desc = document.getElementById('new-cafe-desc').value;
@@ -132,17 +179,13 @@
             saveState(); renderList();
             document.getElementById('new-cafe-name').value = ''; document.getElementById('new-cafe-desc').value = '';
         }
-        function vote(id, type) {
-            if (state.votedIds.includes(String(id))) return alert('이미 투표함!');
-            if (!state.votes[id]) state.votes[id] = { up: 0, down: 0 };
-            state.votes[id][type]++; state.votedIds.push(String(id));
-            saveState(); renderList();
-        }
+
         function openReviewModal(id, name) {
             currentActiveId = id; document.getElementById('modal-name').innerText = name;
             renderReviews(); document.getElementById('review-modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('review-modal').style.display = 'none'; }
+
         function renderReviews() {
             const list = document.getElementById('modal-reviews'); list.innerHTML = '';
             (state.reviews[currentActiveId] || []).forEach(rev => {
@@ -150,6 +193,7 @@
             });
             if(list.innerHTML === '') list.innerHTML = '<p style="color:#ccc; text-align:center;">첫 후기를 남겨보세요!</p>';
         }
+
         function addReview() {
             const text = document.getElementById('review-text').value; if (!text) return;
             if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
