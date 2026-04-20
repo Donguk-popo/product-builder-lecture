@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맛집 추천하기 | 화곡식후경</title>
+    <style>
+        :root {
+            --bg-color: #fff9f5;
+            --text-color: #2c3e50;
+            --button-bg: #e67e22;
+            --button-hover: #d35400;
+            --container-bg: #ffffff;
+            --nav-bg: #e67e22;
+            --nav-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --button-bg: #d35400;
+            --button-hover: #e67e22;
+            --container-bg: #2c3e50;
+            --nav-bg: #000000;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            color: var(--nav-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav a { color: var(--nav-text); text-decoration: none; margin-left: 20px; font-weight: 500; }
+        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
+
+        .main-content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: var(--button-bg); }
+        p.intro { text-align: center; margin-bottom: 30px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
+        button.submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.submit-btn:hover { background-color: var(--button-hover); }
+
+        .notice {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fdf2e9;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #7e4a35;
+        }
+        [data-theme="dark"] .notice {
+            background-color: #3e2723;
+            color: #d7ccc8;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="location.href='index.html'">😋 화곡식후경</div>
+        <div class="menu">
+            <a href="index.html">홈</a>
+            <a href="recommend.html">맛집 추천하기</a>
+            <button class="theme-toggle" onclick="toggleTheme()" style="background:none; border:1px solid white; color:white; padding:5px 10px; border-radius:15px; cursor:pointer;">🌓 테마</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>✍️ 나만의 맛집 추천</h1>
+            <p class="intro">화곡동 주민들과 공유하고 싶은 진짜 맛집을 알려주세요!</p>
+
+            <form action="https://formspree.io/f/xyklpbyb" method="POST">
+                <div class="form-group">
+                    <label for="restaurant-name">식당 이름</label>
+                    <input type="text" id="restaurant-name" name="restaurant_name" placeholder="예: 화곡영양족발" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">음식 종류</label>
+                    <select id="category" name="category" required>
+                        <option value="">선택해주세요</option>
+                        <option value="한식">한식</option>
+                        <option value="중식">중식</option>
+                        <option value="일식">일식</option>
+                        <option value="양식">양식</option>
+                        <option value="카페/디저트">카페/디저트</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">위치 (지역)</label>
+                    <select id="location" name="location" required>
+                        <option value="">선택해주세요</option>
+                        <option value="화곡역 주변">화곡역 주변</option>
+                        <option value="까치산역 주변">까치산역 주변</option>
+                        <option value="강서구청 인근">강서구청 인근</option>
+                        <option value="우장산역 인근">우장산역 인근</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">추천 이유 / 한줄평</label>
+                    <textarea id="description" name="description" rows="4" placeholder="맛있었던 메뉴나 사장님의 친절함 등 자유롭게 적어주세요!" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recommender">추천인 닉네임 (선택)</label>
+                    <input type="text" id="recommender" name="recommender" placeholder="익명">
+                </div>
+
+                <button type="submit" class="submit-btn">맛집 추천 보내기</button>
+            </form>
+
+            <div class="notice">
+                💡 <strong>알려드립니다:</strong> 제보해주신 맛집은 관리자 검토 후 메인 페이지의 랜덤 추천 리스트에 정식으로 추가됩니다. 소중한 제보 감사합니다!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+    </script>
+</body>
+</html>
