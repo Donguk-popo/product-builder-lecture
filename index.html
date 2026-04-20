@@ -3,245 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="강서구 화곡동 현지인이 추천하는 찐 맛집 리스트. 오늘 점심, 저녁 메뉴 고민을 해결해드리는 화곡동 맛집 추천 서비스입니다.">
-    <meta name="keywords" content="화곡동맛집, 화곡역맛집, 까치산역맛집, 강서구맛집, 화곡동데이트, 화곡동회식">
-    <title>화곡동 맛집 리스트 | 오늘 뭐 먹지? 😋</title>
+    <meta name="description" content="화곡동 현지인이 추천하는 진짜 맛집. 오늘 당신의 식탁을 책임질 맛있는 선택!">
+    <title>화곡식후경 | 화곡동 찐맛집 리스트 😋</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fdf5e6; /* 따뜻한 크림색 */
-            --text-color: #4a3728; /* 진한 커피색 */
-            --button-bg: #d35400; /* 구운 오렌지색 */
-            --button-hover: #a04000;
-            --card-bg: #ffffff;
-            --tag-bg: #f39c12;
-            --tag-text: #ffffff;
-            --container-bg: rgba(255, 255, 255, 0.9);
-            --nav-bg: #4a3728;
-            --nav-text: #fdf5e6;
+            --primary: #ff4757; 
+            --secondary: #ffa502; 
+            --success: #2ed573; 
+            --bg: #f8f9fa;
+            --text: #2f3542;
+            --white: #ffffff;
+            --shadow: 0 15px 35px rgba(255, 71, 87, 0.1);
         }
 
         [data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --text-color: #e0d5c1;
-            --button-bg: #e67e22;
-            --button-hover: #d35400;
-            --card-bg: #2c2c2c;
-            --tag-bg: #d35400;
-            --tag-text: #ffffff;
-            --container-bg: rgba(44, 44, 44, 0.9);
-            --nav-bg: #000000;
+            --bg: #1e272e;
+            --text: #f1f2f6;
+            --white: #2f3542;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
             margin: 0;
-            background-color: var(--bg-color);
-            /* 식탁보 느낌의 미세한 체크 패턴 추가 */
-            background-image: 
-                linear-gradient(rgba(211, 84, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(211, 84, 0, 0.03) 1px, transparent 1px);
+            padding: 0;
+            background-color: var(--bg);
+            background-image: radial-gradient(#ff475711 0.5px, transparent 0.5px);
             background-size: 20px 20px;
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
+            color: var(--text);
+            transition: all 0.3s ease;
             line-height: 1.6;
         }
 
+        h1, h2, h3, .logo { font-family: 'Jua', sans-serif; }
+
         nav {
-            background-color: var(--nav-bg);
-            color: var(--nav-text);
-            padding: 1rem 2rem;
+            background-color: var(--white);
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
+        .logo { font-size: 2.2rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        nav a { text-decoration: none; color: var(--text); font-weight: 700; margin-left: 20px; transition: all 0.3s; padding: 8px 15px; border-radius: 10px; }
+        nav a:hover { background-color: var(--primary); color: white; }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: -60px;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 15px; text-shadow: 3px 3px 15px rgba(0,0,0,0.4); }
+        .hero p { font-size: 1.6rem; max-width: 700px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 50px; }
 
         .main-content {
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 0 auto 60px;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .picker-container {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
             text-align: center;
+            border: 2px solid #ff475711;
         }
 
-        .container {
-            background-color: var(--container-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            margin-bottom: 40px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(211, 84, 0, 0.1);
-        }
-
-        h1 { 
-            font-size: 2.8rem; 
-            margin-bottom: 20px; 
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--button-bg);
-        }
-        
         button.generate-btn {
-            padding: 20px 50px;
-            font-size: 1.3rem;
-            border: none;
-            border-radius: 15px;
-            background-color: var(--button-bg);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            border: none;
+            padding: 22px 70px;
+            font-size: 1.7rem;
+            font-family: 'Jua', sans-serif;
+            border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 20px rgba(211, 84, 0, 0.3);
-            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 12px 25px rgba(255, 71, 87, 0.4);
         }
         button.generate-btn:hover {
-            background-color: var(--button-hover);
-            transform: scale(1.05);
-            box-shadow: 0 12px 25px rgba(211, 84, 0, 0.4);
+            transform: scale(1.08) rotate(-1deg);
+            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.5);
         }
 
-        #result {
-            margin: 40px 0;
-            min-height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .restaurant-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 100%;
-            animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            border-left: 8px solid var(--button-bg);
-            text-align: left;
-        }
-        .restaurant-card h3 { margin: 0 0 12px; font-size: 2rem; color: var(--button-bg); }
-        .restaurant-card p { margin: 8px 0; font-size: 1.15rem; color: var(--text-color); }
+        #result { margin-top: 50px; min-height: 200px; display: flex; justify-content: center; align-items: center; }
         
-        .tag {
-            background-color: var(--tag-bg);
-            color: var(--tag-text);
-            padding: 5px 15px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: inline-block;
+        .restaurant-card {
+            background: var(--white);
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            max-width: 550px;
+            width: 100%;
+            transition: all 0.5s ease;
+            animation: slideUp 0.6s ease-out;
+            border: 1px solid #eee;
         }
-
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-
-        /* 푸터와 기타 섹션도 통일감 있게 조정 */
-        .info-section {
-            background-image: radial-gradient(var(--button-bg) 0.5px, transparent 0.5px);
-            background-size: 10px 10px;
-            background-color: var(--container-bg);
-            border: 1px dashed var(--button-bg);
+        .card-img {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
         }
-    </style>
+        .card-badge {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-family: 'Jua', sans-serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .card-content { padding: 40px; text-align: left; }
+        .card-content h3 { font-size: 2.5rem; color: var(--primary); margin: 0 0 15px; }
+        .card-content p { font-size: 1.2rem; line-height: 1.7; color: var(--text); }
+        .category-tag { background: #fff5f5; color: var(--secondary); padding: 5px 15px; border-radius: 10px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: inline-block; }
 
-        footer { background-color: var(--nav-bg); color: var(--nav-text); padding: 40px 20px; margin-top: 60px; text-align: center; }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: #f8c291; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
-        .footer-links a:hover { color: white; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .info-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            text-align: left;
+            border-bottom: 5px solid var(--secondary);
+        }
+        .info-card h2 { color: var(--primary); font-size: 1.8rem; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .info-card ul { padding-left: 20px; }
+        .info-card li { margin-bottom: 10px; font-weight: 500; }
 
-        .contact-section { max-width: 500px; margin: 40px auto; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        input, textarea {
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;
-            background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box;
+        footer { background: var(--white); padding: 60px 20px; text-align: center; border-top: 1px solid #eee; }
+        .footer-links { margin-bottom: 30px; }
+        .footer-links a { margin: 0 20px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 1.1rem; }
+        
+        .theme-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Jua', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .theme-btn:hover { transform: scale(1.1); background: var(--secondary); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.2rem; }
+            button.generate-btn { padding: 18px 40px; font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="location.href='index.html'">😋 화곡식후경</div>
+        <div class="logo" onclick="location.href='index.html'"><span>🥘</span> 화곡식후경</div>
         <div class="menu">
             <a href="index.html">홈</a>
-            <a href="recommend.html">맛집 추천하기</a>
-            <a href="about.html">소개</a>
-            <button class="theme-toggle" onclick="toggleTheme()">🌓 테마 변경</button>
+            <a href="recommend.html">맛집 제보</a>
+            <button class="theme-btn" onclick="toggleTheme()">🌓 테마</button>
         </div>
     </nav>
 
+    <div class="hero">
+        <h1>오늘 뭐 먹지?</h1>
+        <p>화곡동 현지인들의 찐맛집 추천 리스트</p>
+    </div>
+
     <div class="main-content">
-        <div class="container">
-            <h1>🏘️ 화곡동 맛집 랜덤 추천</h1>
-            <p>오늘 화곡동에서 뭐 먹을지 고민되시나요? 검증된 맛집 중 하나를 추천해드려요!</p>
-            <button class="generate-btn" onclick="pickRestaurant()">오늘의 맛집 뽑기</button>
+        <div class="picker-container">
+            <button class="generate-btn" onclick="pickRestaurant()">😋 맛집 랜덤 추천!</button>
             <div id="result">
-                <p style="color: #95a5a6;">버튼을 눌러 맛집을 확인하세요!</p>
+                <p style="margin-top: 30px; font-weight: bold; color: #a4b0be; font-size: 1.2rem;">버튼을 클릭하면 화곡동 밥도둑이 나타납니다!</p>
             </div>
         </div>
 
-        <section class="info-section">
-            <h2>📍 화곡동 동네별 맛집 특징</h2>
-            <p>강서구 화곡동은 넓은 면적만큼이나 동네별로 뚜렷한 맛집 색깔을 가지고 있습니다.</p>
-            <ul>
-                <li><strong>화곡역 주변:</strong> 프랜차이즈와 오래된 노포가 공존하는 곳입니다. 특히 화곡본동시장 내의 영양족발은 전국구급 인기를 자랑합니다.</li>
-                <li><strong>까치산역/복개천:</strong> 고기집과 이자카야, 술집이 밀집해 있어 저녁 약속 장소로 인기가 많습니다. 가성비 좋은 무한리필 집이나 특색 있는 개인 식당이 많습니다.</li>
-                <li><strong>강서구청 인근:</strong> 관공서와 오피스가 밀집해 있어 점심 메뉴가 훌륭한 백반집과 전통 있는 해장국집이 많기로 유명합니다.</li>
-            </ul>
-
-            <h2>💡 맛집 실패 없는 꿀팁</h2>
-            <p>화곡동 현지인들이 전수하는 맛집 선정 노하우입니다.</p>
-            <ul>
-                <li>시장을 공략하세요! 화곡본동시장, 까치산시장 내 식당들은 오랜 시간 검증된 맛을 자랑합니다.</li>
-                <li>주차 공간을 미리 확인하세요. 화곡동은 골목이 좁아 주차가 어려운 식당이 많으니 공영주차장 위치 파악은 필수입니다.</li>
-            </ul>
-        </section>
-
-        <div class="container contact-section">
-            <h2>✉️ 맛집 제보 및 문의</h2>
-            <form action="https://formspree.io/f/xyklpbyb" method="POST">
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="성함/업체명" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="_replyto" placeholder="이메일 주소" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" rows="4" placeholder="추천하고 싶은 맛집이나 문의 내용을 입력해주세요" required></textarea>
-                </div>
-                <button type="submit" class="generate-btn" style="width: 100%; padding: 12px;">보내기</button>
-            </form>
+        <div class="info-grid">
+            <div class="info-card">
+                <h2>📍 우리동네 핫플</h2>
+                <p><strong>화곡역:</strong> 줄 서서 먹는 전설의 영양족발과 정겨운 시장 맛집들.</p>
+                <p><strong>까치산:</strong> 불금의 성지! 복개천 고기 골목과 분위기 맛집들.</p>
+                <p><strong>강서구청:</strong> 해장의 메카! 24시간 뼈해장국과 직장인 맛집 가득.</p>
+            </div>
+            <div class="info-card">
+                <h2>✨ 200% 즐기는 법</h2>
+                <ul>
+                    <li>동네 노포의 숨겨진 내공을 믿어보세요!</li>
+                    <li>시장의 따뜻한 인심과 갓 나온 음식을 즐기세요.</li>
+                    <li>오늘 추천받은 곳에 과감히 도전해보세요!</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="container comment-section" style="text-align: left;">
-            <div id="disqus_thread"></div>
+        <div class="picker-container" style="max-width: 700px; margin: 0 auto 60px; text-align: left;">
+            <h2 style="color: var(--primary); font-family: 'Jua'; text-align: center; font-size: 2rem;">💬 식구들의 맛평가</h2>
+            <div id="disqus_thread" style="margin-top: 30px;"></div>
         </div>
     </div>
 
     <footer>
         <div class="footer-links">
-            <a href="about.html">서비스 소개</a> |
-            <a href="privacy.html">개인정보처리방침</a> |
+            <a href="about.html">소개</a>
+            <a href="privacy.html">개인정보</a>
             <a href="terms.html">이용약관</a>
         </div>
-        <p>&copy; 2024 화곡식후경. All rights reserved.</p>
+        <p style="margin-top: 25px; font-weight: bold; color: #a4b0be;">&copy; 2024 화곡식후경. 맛있게 드세요! 🍽️</p>
     </footer>
 
     <script>
         const restaurants = [
-            { name: "화곡영양족발", category: "족발/보쌈", desc: "화곡본동시장의 전설, 쫀득하고 따뜻한 족발의 끝판왕", zone: "화곡역" },
-            { name: "광영수산", category: "해물/회", desc: "가성비 넘치는 신선한 회와 푸짐한 스키다시", zone: "까치산역" },
-            { name: "전주뼈해장국", category: "한식/탕", desc: "24시간 끓여낸 진한 국물과 부드러운 살코기", zone: "강서구청" },
-            { name: "대왕곱창", category: "곱창/구이", desc: "잡내 없이 고소한 소곱창과 마지막 볶음밥이 일품", zone: "까치산역" },
-            { name: "오남매닭갈비", category: "닭갈비", desc: "매콤달콤한 양념과 푸짐한 양으로 사랑받는 곳", zone: "화곡역" },
-            { name: "다케", category: "이자카야", desc: "화곡동에서 일본 현지의 맛을 느끼는 감성 술집", zone: "복개천" },
-            { name: "이차돌", category: "고기집", desc: "차돌박이와 쫄면의 환상적인 궁합", zone: "화곡역" }
+            { 
+                name: "화곡영양족발", category: "족발/보쌈", 
+                desc: "화곡본동시장의 자랑! 쫀득하고 따뜻한 고기가 입안에서 사르르 녹는 전설의 맛입니다.", 
+                zone: "화곡본동시장", 
+                img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                name: "광영수산", category: "해물/회", 
+                desc: "까치산역의 가성비 끝판왕! 신선한 회와 푸짐한 해산물을 즐기고 싶다면 이곳이 정답.", 
+                zone: "까치산역", 
+                img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db76?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                name: "전주뼈해장국", category: "한식/탕", 
+                desc: "깊고 진한 국물에 살코기가 가득! 강서구청 직장인들이 줄 서서 먹는 찐 해장 맛집입니다.", 
+                zone: "강서구청", 
+                img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                name: "대왕곱창", category: "곱창/구이", 
+                desc: "지글지글 소리부터 남다른 곱창 맛집. 꽉 찬 곱과 고소한 기름맛이 일품입니다.", 
+                zone: "까치산역", 
+                img: "https://images.unsplash.com/photo-1514467958571-770d527a6c77?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                name: "오남매닭갈비", category: "닭갈비", 
+                desc: "화곡역 인근에서 가장 핫한 닭갈비집. 매콤달콤한 양념과 부드러운 닭고기가 환상적입니다.", 
+                zone: "화곡역", 
+                img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+            }
         ];
 
+        // 테마 설정
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -252,31 +289,35 @@
             localStorage.setItem('theme', newTheme);
         }
 
+        // 맛집 랜덤 뽑기 기능
         function pickRestaurant() {
             const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "<p>어디가 좋을까 고민 중...</p>";
+            resultDiv.innerHTML = "<h3 style='color: var(--primary); font-family: \"Jua\"; font-size: 1.8rem;'>😋 오늘의 밥도둑을 고르는 중...</h3>";
             
             setTimeout(() => {
-                const randomIdx = Math.floor(Math.random() * restaurants.length);
-                const r = restaurants[randomIdx];
+                const r = restaurants[Math.floor(Math.random() * restaurants.length)];
                 resultDiv.innerHTML = `
                     <div class="restaurant-card">
-                        <span class="tag">${r.zone}</span>
-                        <h3>${r.name}</h3>
-                        <p><strong>종류:</strong> ${r.category}</p>
-                        <p>${r.desc}</p>
+                        <div class="card-img" style="background-image: url('${r.img}')">
+                            <span class="card-badge">${r.zone}</span>
+                        </div>
+                        <div class="card-content">
+                            <span class="category-tag">${r.category}</span>
+                            <h3>${r.name}</h3>
+                            <p>${r.desc}</p>
+                        </div>
                     </div>
                 `;
-            }, 600);
+            }, 800);
         }
     </script>
 
     <script>
         (function() {
-        var d = document, s = d.createElement('script');
-        s.src = 'https://productbuilder-pjueot9mpq.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
+            var d = document, s = d.createElement('script');
+            s.src = 'https://productbuilder-pjueot9mpq.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
         })();
     </script>
 </body>
