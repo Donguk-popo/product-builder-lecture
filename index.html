@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-Y857GWRVHE');
     </script>
     <script type="text/javascript">
@@ -19,282 +18,177 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="화곡동 현지인이 추천하는 진짜 맛집. 오늘 당신의 식탁을 책임질 맛있는 선택!">
-    <title>화곡식후경 | 화곡동 찐맛집 리스트 😋</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>STEC 반도체 장비 2기 | 학생 포털</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4757; 
-            --secondary: #ffa502; 
-            --success: #2ed573; 
-            --bg: #f8f9fa;
-            --text: #2f3542;
+            --stec-blue: #004a99;
+            --stec-dark: #1a1c23;
+            --stec-light: #f4f7fa;
+            --accent: #00d2ff;
             --white: #ffffff;
-            --shadow: 0 15px 35px rgba(255, 71, 87, 0.1);
+            --shadow: 0 10px 30px rgba(0,74,153,0.1);
         }
 
         [data-theme="dark"] {
-            --bg: #1e272e;
-            --text: #f1f2f6;
-            --white: #2f3542;
-            --shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            --stec-light: #12141a;
+            --stec-dark: #ffffff;
+            --white: #1c1f26;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         body {
-            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Pretendard', sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            background-image: radial-gradient(#ff475711 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-            color: var(--text);
+            background-color: var(--stec-light);
+            color: var(--stec-dark);
             transition: all 0.3s ease;
-            line-height: 1.6;
         }
 
-        h1, h2, h3, .logo { font-family: 'Jua', sans-serif; }
-
         nav {
-            background-color: var(--white);
-            padding: 10px 5%;
+            background-color: var(--stec-blue);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
-        .logo { font-size: 2.2rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        nav a { text-decoration: none; color: var(--text); font-weight: 700; margin-left: 20px; transition: all 0.3s; padding: 8px 15px; border-radius: 10px; }
-        nav a:hover { background-color: var(--primary); color: white; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
 
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 450px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            background: linear-gradient(135deg, var(--stec-blue), #002d62);
+            padding: 80px 5%;
             text-align: center;
-            padding: 0 20px;
-            margin-bottom: -60px;
+            color: white;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
         }
-        .hero h1 { font-size: 4rem; margin-bottom: 15px; text-shadow: 3px 3px 15px rgba(0,0,0,0.4); }
-        .hero p { font-size: 1.6rem; max-width: 700px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 50px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; font-family: 'JetBrains Mono', monospace; }
 
         .main-content {
-            max-width: 1000px;
-            margin: 0 auto 60px;
+            max-width: 1200px;
+            margin: -50px auto 60px;
             padding: 0 20px;
-            position: relative;
-            z-index: 10;
         }
 
-        .picker-container {
-            background: var(--white);
-            padding: 50px 40px;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
-            margin-bottom: 50px;
-            text-align: center;
-            border: 2px solid #ff475711;
-        }
-
-        button.generate-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 22px 70px;
-            font-size: 1.7rem;
-            font-family: 'Jua', sans-serif;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 12px 25px rgba(255, 71, 87, 0.4);
-        }
-        button.generate-btn:hover {
-            transform: scale(1.08) rotate(-1deg);
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.5);
-        }
-
-        #result { margin-top: 50px; min-height: 200px; display: flex; justify-content: center; align-items: center; }
-        
-        .restaurant-card {
-            background: var(--white);
-            border-radius: 35px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            max-width: 550px;
-            width: 100%;
-            transition: all 0.5s ease;
-            animation: slideUp 0.6s ease-out;
-            border: 1px solid #eee;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .card-img {
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .card-badge {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            background: var(--primary);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-family: 'Jua', sans-serif;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .card-content { padding: 40px; text-align: left; }
-        .card-content h3 { font-size: 2.5rem; color: var(--primary); margin: 0 0 15px; }
-        .card-content p { font-size: 1.2rem; line-height: 1.7; color: var(--text); }
-        .category-tag { background: #fff5f5; color: var(--secondary); padding: 5px 15px; border-radius: 10px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: inline-block; }
-
-        .info-grid {
+        .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
-        .info-card {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: var(--shadow);
-            text-align: left;
-            border-bottom: 5px solid var(--secondary);
-        }
-        .info-card h2 { color: var(--primary); font-size: 1.8rem; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .info-card ul { padding-left: 20px; }
-        .info-card li { margin-bottom: 10px; font-weight: 500; }
 
-        footer { background: var(--white); padding: 60px 20px; text-align: center; border-top: 1px solid #eee; }
-        .footer-links { margin-bottom: 30px; }
-        .footer-links a { margin: 0 20px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 1.1rem; }
-        
-        .theme-btn {
-            background: var(--primary);
+        .menu-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: var(--stec-dark);
+            border: 1px solid rgba(0,74,153,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .menu-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--stec-blue);
+        }
+        .menu-card i { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .menu-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .menu-card p { font-size: 0.95rem; opacity: 0.7; }
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 5px;
+            background: var(--stec-blue);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        .menu-card:hover::after { transform: scaleX(1); }
+
+        .status-bar {
+            background: var(--white);
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: var(--shadow);
+            font-weight: 600;
+        }
+        .status-item span { color: var(--stec-blue); margin-right: 8px; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Jua', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        .theme-btn:hover { transform: scale(1.1); background: var(--secondary); }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.8rem; }
-            .hero p { font-size: 1.2rem; }
-            button.generate-btn { padding: 18px 40px; font-size: 1.3rem; }
+            padding: 8px 15px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="location.href='index.html'"><span>🥘</span> 화곡식후경</div>
-        <div class="menu">
-            <a href="index.html">홈</a>
-            <a href="recommend.html">맛집 제보</a>
-            <button class="theme-btn" onclick="toggleTheme()">🌓 테마</button>
-        </div>
+        <div class="logo">STEC <span>SEMI 2nd</span></div>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 MODE</button>
     </nav>
 
     <div class="hero">
-        <h1>오늘 뭐 먹지?</h1>
-        <p>화곡동 현지인들의 찐맛집 추천 리스트</p>
+        <h1>서울 기술 교육센터</h1>
+        <p>반도체 장비 유지보수 전문가 과정 2기 학생 포털</p>
     </div>
 
     <div class="main-content">
-        <div class="picker-container">
-            <button class="generate-btn" onclick="pickRestaurant()">😋 맛집 랜덤 추천!</button>
-            <div id="result">
-                <p style="margin-top: 30px; font-weight: bold; color: #a4b0be; font-size: 1.2rem;">버튼을 클릭하면 화곡동 밥도둑이 나타납니다!</p>
-            </div>
+        <div class="menu-grid">
+            <a href="curriculum.html" class="menu-card">
+                <i>📅</i>
+                <h3>학원 커리큘럼</h3>
+                <p>전체 교육 일정과 주차별 학습 로드맵을 확인하세요.</p>
+            </a>
+            <a href="major.html" class="menu-card">
+                <i>🔬</i>
+                <h3>전공 교과</h3>
+                <p>반도체 공정, 장비 실습 등 핵심 과목 자료실입니다.</p>
+            </a>
+            <a href="food.html" class="menu-card">
+                <i>🍱</i>
+                <h3>맛집 리스트</h3>
+                <p>동기들과 함께하는 즐거운 점심 시간! 학원 주변 맛집.</p>
+            </a>
+            <a href="coffee.html" class="menu-card">
+                <i>☕</i>
+                <h3>커피숍 추천</h3>
+                <p>식후 카페인 충전은 필수! 조용히 공부하기 좋은 카페.</p>
+            </a>
         </div>
 
-        <div class="info-grid">
-            <div class="info-card">
-                <h2>📍 우리동네 핫플</h2>
-                <p><strong>화곡역:</strong> 줄 서서 먹는 전설의 영양족발과 정겨운 시장 맛집들.</p>
-                <p><strong>까치산:</strong> 불금의 성지! 복개천 고기 골목과 분위기 맛집들.</p>
-                <p><strong>강서구청:</strong> 해장의 메카! 24시간 뼈해장국과 직장인 맛집 가득.</p>
-            </div>
-            <div class="info-card">
-                <h2>✨ 200% 즐기는 법</h2>
-                <ul>
-                    <li>동네 노포의 숨겨진 내공을 믿어보세요!</li>
-                    <li>시장의 따뜻한 인심과 갓 나온 음식을 즐기세요.</li>
-                    <li>오늘 추천받은 곳에 과감히 도전해보세요!</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="picker-container" style="max-width: 700px; margin: 0 auto 60px; text-align: left;">
-            <h2 style="color: var(--primary); font-family: 'Jua'; text-align: center; font-size: 2rem;">💬 식구들의 맛평가</h2>
-            <div id="disqus_thread" style="margin-top: 30px;"></div>
+        <div class="status-bar">
+            <div class="status-item"><span>🚀</span> 과정 진행률: 45%</div>
+            <div class="status-item"><span>📅</span> 오늘: 2026. 04. 20</div>
+            <div class="status-item"><span>💪</span> 힘내자 2기!</div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-links">
-            <a href="about.html">소개</a>
-            <a href="privacy.html">개인정보</a>
-            <a href="terms.html">이용약관</a>
-        </div>
-        <p style="margin-top: 25px; font-weight: bold; color: #a4b0be;">&copy; 2024 화곡식후경. 맛있게 드세요! 🍽️</p>
+        <p>&copy; 2026 서울기술교육센터 반도체 장비 2기. All Rights Reserved.</p>
+        <p style="margin-top: 10px;"><a href="privacy.html" style="color: inherit; text-decoration: none;">개인정보처리방침</a></p>
     </footer>
 
     <script>
-        const restaurants = [
-            { 
-                name: "화곡영양족발", category: "족발/보쌈", 
-                desc: "화곡본동시장의 자랑! 쫀득하고 따뜻한 고기가 입안에서 사르르 녹는 전설의 맛입니다.", 
-                zone: "화곡본동시장", 
-                img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                name: "광영수산", category: "해물/회", 
-                desc: "까치산역의 가성비 끝판왕! 신선한 회와 푸짐한 해산물을 즐기고 싶다면 이곳이 정답.", 
-                zone: "까치산역", 
-                img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db76?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                name: "전주뼈해장국", category: "한식/탕", 
-                desc: "깊고 진한 국물에 살코기가 가득! 강서구청 직장인들이 줄 서서 먹는 찐 해장 맛집입니다.", 
-                zone: "강서구청", 
-                img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                name: "대왕곱창", category: "곱창/구이", 
-                desc: "지글지글 소리부터 남다른 곱창 맛집. 꽉 찬 곱과 고소한 기름맛이 일품입니다.", 
-                zone: "까치산역", 
-                img: "https://images.unsplash.com/photo-1514467958571-770d527a6c77?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                name: "오남매닭갈비", category: "닭갈비", 
-                desc: "화곡역 인근에서 가장 핫한 닭갈비집. 매콤달콤한 양념과 부드러운 닭고기가 환상적입니다.", 
-                zone: "화곡역", 
-                img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            }
-        ];
-
-        // 테마 설정
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -304,37 +198,6 @@
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         }
-
-        // 맛집 랜덤 뽑기 기능
-        function pickRestaurant() {
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "<h3 style='color: var(--primary); font-family: \"Jua\"; font-size: 1.8rem;'>😋 오늘의 밥도둑을 고르는 중...</h3>";
-            
-            setTimeout(() => {
-                const r = restaurants[Math.floor(Math.random() * restaurants.length)];
-                resultDiv.innerHTML = `
-                    <div class="restaurant-card">
-                        <div class="card-img" style="background-image: url('${r.img}')">
-                            <span class="card-badge">${r.zone}</span>
-                        </div>
-                        <div class="card-content">
-                            <span class="category-tag">${r.category}</span>
-                            <h3>${r.name}</h3>
-                            <p>${r.desc}</p>
-                        </div>
-                    </div>
-                `;
-            }, 800);
-        }
-    </script>
-
-    <script>
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://productbuilder-pjueot9mpq.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
     </script>
 </body>
 </html>

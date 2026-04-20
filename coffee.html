@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y857GWRVHE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Y857GWRVHE');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "welo4j25g7");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커피숍 추천 | STEC 반도체 장비 2기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Pretendard:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --coffee: #6f4e37; --stec-blue: #004a99; --bg: #fffcf9; --white: #ffffff; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #3e2723; }
+        nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--coffee); }
+        .pick-box { background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(111,78,55,0.1); margin-bottom: 30px; }
+        button.pick-btn { background: var(--coffee); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-family: 'Jua', sans-serif; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        button.pick-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(111,78,55,0.3); }
+        #result { margin-top: 30px; min-height: 150px; }
+        .res-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 2px solid var(--coffee); animation: pop 0.4s ease; text-align: left; }
+        @keyframes pop { from { transform: scale(0.9); opacity: 0; } }
+        .res-img { height: 200px; background-size: cover; background-position: center; }
+        .res-info { padding: 20px; }
+        .res-info h3 { margin: 0 0 10px; color: var(--coffee); }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div>
+        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
+    </nav>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 뒤로가기</a>
+        <h1>☕ 카공 & 휴식 카페 추천</h1>
+        <p>집중이 잘 되는 조용한 카페부터 달콤한 디저트 맛집까지!</p>
+        <div class="pick-box">
+            <button class="pick-btn" onclick="pickCoffee()">오늘의 카페 추천!</button>
+            <div id="result">
+                <p style="color: #d7ccc8; font-weight: bold;">카페인 수혈이 시급하신가요? 클릭해보세요.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const coffees = [
+            { name: "투썸플레이스", desc: "넓은 매장과 다양한 케이크! 카공하기 가장 무난한 장소.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500" },
+            { name: "개인 감성 카페", desc: "분위기 좋은 음악과 사장님의 핸드드립 커피가 일품.", img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500" },
+            { name: "메가커피", desc: "수업 전 빠르게 테이크아웃! 가성비 넘치는 에너지 충전소.", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500" }
+        ];
+        function pickCoffee() {
+            const r = coffees[Math.floor(Math.random() * coffees.length)];
+            document.getElementById('result').innerHTML = `
+                <div class="res-card">
+                    <div class="res-img" style="background-image: url('${r.img}')"></div>
+                    <div class="res-info">
+                        <h3>${r.name}</h3>
+                        <p>${r.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

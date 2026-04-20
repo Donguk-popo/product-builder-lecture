@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y857GWRVHE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Y857GWRVHE');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "welo4j25g7");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맛집 리스트 | STEC 반도체 장비 2기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Pretendard:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ff4757; --stec-blue: #004a99; --bg: #f8f9fa; --white: #ffffff; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; }
+        nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); }
+        .pick-box { background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        button.pick-btn { background: var(--primary); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-family: 'Jua', sans-serif; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        button.pick-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,71,87,0.3); }
+        #result { margin-top: 30px; min-height: 150px; }
+        .res-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 2px solid var(--primary); animation: pop 0.4s ease; text-align: left; }
+        @keyframes pop { from { transform: scale(0.9); opacity: 0; } }
+        .res-img { height: 200px; background-size: cover; background-position: center; }
+        .res-info { padding: 20px; }
+        .res-info h3 { margin: 0 0 10px; color: var(--primary); }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div>
+        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
+    </nav>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 뒤로가기</a>
+        <h1>🍱 오늘 점심 뭐 먹지?</h1>
+        <p>학원 주변 동기들이 인정한 찐맛집 리스트</p>
+        <div class="pick-box">
+            <button class="pick-btn" onclick="pickFood()">맛집 랜덤 뽑기!</button>
+            <div id="result">
+                <p style="color: #a4b0be; font-weight: bold;">메뉴 고민 끝! 버튼을 눌러보세요.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const foods = [
+            { name: "화곡영양족발", desc: "시장 안 전설의 족발! 동기들과 소규모 회식으로 최고.", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500" },
+            { name: "전주뼈해장국", desc: "공부하느라 지친 몸, 든든한 국밥으로 충전하세요.", img: "https://images.unsplash.com/photo-1512058560366-cd242d4235cd?w=500" },
+            { name: "오남매닭갈비", desc: "매콤한 게 당길 때! 볶음밥은 무조건 추가 필수.", img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=500" }
+        ];
+        function pickFood() {
+            const r = foods[Math.floor(Math.random() * foods.length)];
+            document.getElementById('result').innerHTML = `
+                <div class="res-card">
+                    <div class="res-img" style="background-image: url('${r.img}')"></div>
+                    <div class="res-info">
+                        <h3>${r.name}</h3>
+                        <p>${r.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
