@@ -18,41 +18,203 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>커리큘럼 | STEC 반도체 장비 2기</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>교육 일정 | STEC 반도체 장비 2기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&family=Jua&display=swap" rel="stylesheet">
     <style>
         :root {
             --stec-blue: #004a99;
             --stec-light: #f4f7fa;
             --white: #ffffff;
-            --text: #2f3542;
+            --rest-bg: #e3f2fd;
+            --holiday-text: #ff4757;
+            --special-bg: #fff9db;
+            --today-border: #00d2ff;
         }
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--stec-light); color: var(--text); line-height: 1.6; }
-        nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; }
-        nav a { color: white; text-decoration: none; font-weight: bold; }
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-        h1 { font-size: 2.5rem; color: var(--stec-blue); text-align: center; margin-bottom: 50px; }
-        .timeline { position: relative; padding-left: 30px; border-left: 4px solid var(--stec-blue); }
-        .timeline-item { position: relative; margin-bottom: 40px; padding: 25px; background: var(--white); border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .timeline-item::before { content: ''; position: absolute; left: -41px; top: 30px; width: 18px; height: 18px; background: var(--stec-blue); border-radius: 50%; border: 4px solid var(--white); }
-        .week { font-weight: 800; color: var(--stec-blue); font-size: 1.2rem; display: block; margin-bottom: 10px; }
-        .timeline-item h3 { margin: 0 0 10px 0; font-size: 1.4rem; }
-        .timeline-item p { margin: 0; opacity: 0.8; }
+
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--stec-light); color: #2f3542; line-height: 1.6; }
+        nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--stec-blue); text-align: center; margin-bottom: 10px; }
+        .sub-title { text-align: center; margin-bottom: 40px; color: #747d8c; }
+
+        /* Calendar Controls */
+        .calendar-nav { display: flex; justify-content: center; gap: 20px; align-items: center; margin-bottom: 30px; }
+        .nav-btn { background: var(--stec-blue); color: white; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+        /* Legend */
+        .legend { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 3px; }
+
+        /* Calendar Grid */
+        .calendar-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 10px; 
+            background: var(--white); 
+            padding: 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .day-label { text-align: center; font-weight: 800; padding: 10px 0; color: #a4b0be; }
+        .day-label.sun { color: var(--holiday-text); }
+        .day-label.sat { color: #3742fa; }
+
+        .day-cell { 
+            min-height: 100px; 
+            padding: 10px; 
+            border-radius: 15px; 
+            border: 1px solid #f1f2f6; 
+            display: flex; 
+            flex-direction: column; 
+            transition: all 0.2s;
+        }
+        .day-cell.today { border: 2px solid var(--today-border); background: #f0fbff; }
+        .day-cell.other-month { opacity: 0.3; pointer-events: none; }
+        .day-cell.rest { background: var(--rest-bg); border: none; }
+        .day-cell.special { background: var(--special-bg); }
+        
+        .date-num { font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; }
+        .sun .date-num, .holiday .date-num { color: var(--holiday-text); }
+        .sat .date-num { color: #3742fa; }
+
+        .schedule-info { font-size: 0.75rem; font-weight: 600; line-height: 1.2; }
+        .hours-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; background: var(--stec-blue); color: white; margin-top: 5px; }
+        .off-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; background: var(--holiday-text); color: white; margin-top: 5px; }
+
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .calendar-grid { gap: 5px; padding: 10px; }
+            .day-cell { min-height: 70px; padding: 5px; }
+            .date-num { font-size: 0.9rem; }
+            .schedule-info { font-size: 0.65rem; }
+        }
     </style>
 </head>
 <body>
-    <nav><div class="logo">STEC <span>SEMI 2nd</span></div><a href="index.html">홈으로</a></nav>
+    <nav><div class="logo">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
+
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
-        <h1>📅 교육 커리큘럼</h1>
-        <div class="timeline">
-            <div class="timeline-item"><span class="week">1~2주차</span><h3>반도체 기초 및 소자공학</h3><p>반도체 산업의 이해, 기초 물리, 소자 특성 및 동작 원리 습득</p></div>
-            <div class="timeline-item"><span class="week">3~6주차</span><h3>8대 공정 기술 심화</h3><p>Photo, Etch, Clean, Diffusion, Thin Film 등 핵심 공정 이론 및 실무</p></div>
-            <div class="timeline-item"><span class="week">7~10주차</span><h3>장비 유지보수 및 CS 실습</h3><p>진공 기술, RF 시스템, 장비 PM 실습 및 트러블슈팅 대응 능력 배양</p></div>
-            <div class="timeline-item"><span class="week">11~14주차</span><h3>자동화 제어 및 PLC</h3><p>전기 전자 기초, PLC 제어 실습, 반도체 장비 자동화 시스템 이해</p></div>
-            <div class="timeline-item"><span class="week">15~16주차</span><h3>실무 프로젝트 및 취업 지원</h3><p>종합 프로젝트 수행, 이력서 첨삭 및 면접 컨설팅 (취업 성공!)</p></div>
+        <h1>📅 교육 일정 안내</h1>
+        <p class="sub-title">2026. 03. 10 ~ 2026. 09. 18 과정 상세 스케줄</p>
+
+        <div class="calendar-nav">
+            <button class="nav-btn" onclick="changeMonth(-1)">◀ 이전 달</button>
+            <h2 id="current-month-display" style="font-family: 'Jua'; min-width: 150px; text-align:center;"></h2>
+            <button class="nav-btn" onclick="changeMonth(1)">다음 달 ▶</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="dot" style="background: white; border:1px solid #ddd;"></div> 기본수업 (7h)</div>
+            <div class="legend-item"><div class="dot" style="background: var(--rest-bg);"></div> 주말/휴일</div>
+            <div class="legend-item"><div class="dot" style="background: var(--special-bg);"></div> 수업시간 변동</div>
+        </div>
+
+        <div class="calendar-grid" id="calendar-body">
+            <!-- 요일 레이블 -->
+            <div class="day-label sun">일</div>
+            <div class="day-label">월</div>
+            <div class="day-label">화</div>
+            <div class="day-label">수</div>
+            <div class="day-label">목</div>
+            <div class="day-label">금</div>
+            <div class="day-label sat">토</div>
+            <!-- 날짜 셀들이 여기에 렌더링됩니다 -->
         </div>
     </div>
+
+    <script>
+        const specialDays = {
+            "2026-04-23": { type: "off", desc: "체육행사 (휴강)" },
+            "2026-04-24": { type: "off", desc: "체육행사 (휴강)" },
+            "2026-05-01": { type: "holiday", desc: "근로자의 날" },
+            "2026-05-04": { type: "holiday", desc: "대체공휴일" },
+            "2026-05-05": { type: "holiday", desc: "어린이날" },
+            "2026-05-25": { type: "off", desc: "석가탄신일 (휴강)" },
+            "2026-06-03": { type: "off", desc: "학원 지정 휴강" },
+            "2026-07-17": { type: "off", desc: "제헌절 (휴강)" },
+            "2026-07-30": { type: "hours", time: 6, desc: "단축수업" },
+            "2026-07-31": { type: "off", desc: "가정학습일" },
+            "2026-08-05": { type: "hours", time: 6, desc: "단축수업" },
+            "2026-08-17": { type: "holiday", desc: "대체휴일" },
+            "2026-09-01": { type: "hours", time: 8, desc: "집중보강" },
+            "2026-09-02": { type: "hours", time: 8, desc: "집중보강" },
+            "2026-09-18": { type: "hours", time: 6, desc: "마지막 수업!" }
+        };
+
+        let viewDate = new Date(2026, 3, 20); // 초기값 4월
+
+        function renderCalendar() {
+            const year = viewDate.getFullYear();
+            const month = viewDate.getMonth();
+            document.getElementById('current-month-display').innerText = `${year}년 ${month + 1}월`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+            const calendarBody = document.getElementById('calendar-body');
+
+            // 기존 날짜 제거 (요일 레이블은 유지)
+            const cells = calendarBody.querySelectorAll('.day-cell');
+            cells.forEach(cell => cell.remove());
+
+            // 빈 칸 채우기
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'day-cell other-month';
+                calendarBody.appendChild(emptyCell);
+            }
+
+            // 날짜 채우기
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+            for (let date = 1; date <= lastDate; date++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                const dayOfWeek = new Date(year, month, date).getDay();
+                const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+                
+                const cell = document.createElement('div');
+                cell.className = 'day-cell';
+                if (dateStr === todayStr) cell.classList.add('today');
+                
+                let content = `<div class="date-num">${date}</div>`;
+                
+                if (isWeekend) {
+                    cell.classList.add('rest');
+                    content += `<div class="schedule-info">🍃 휴식</div>`;
+                } else {
+                    const special = specialDays[dateStr];
+                    if (special) {
+                        if (special.type === 'off' || special.type === 'holiday') {
+                            cell.classList.add('rest');
+                            if(special.type === 'holiday') cell.classList.add('holiday');
+                            content += `<div class="off-badge">${special.desc}</div>`;
+                        } else if (special.type === 'hours') {
+                            cell.classList.add('special');
+                            content += `<div class="schedule-info">${special.desc}</div>`;
+                            content += `<div class="hours-badge">${special.time}시간</div>`;
+                        }
+                    } else {
+                        // 평일 기본 수업
+                        content += `<div class="schedule-info">정규수업</div>`;
+                        content += `<div class="hours-badge" style="background:#a4b0be">7시간</div>`;
+                    }
+                }
+
+                cell.innerHTML = content;
+                calendarBody.appendChild(cell);
+            }
+        }
+
+        function changeMonth(delta) {
+            viewDate.setMonth(viewDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        renderCalendar();
+    </script>
 </body>
 </html>
