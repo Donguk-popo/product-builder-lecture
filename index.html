@@ -30,19 +30,12 @@
             --shadow: 0 10px 30px rgba(0,74,153,0.1);
         }
 
-        [data-theme="dark"] {
-            --stec-light: #12141a;
-            --stec-dark: #ffffff;
-            --white: #1c1f26;
-            --shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
         body {
             font-family: 'Pretendard', sans-serif;
             margin: 0;
             background-color: var(--stec-light);
             color: var(--stec-dark);
-            transition: all 0.3s ease;
+            line-height: 1.6;
         }
 
         nav {
@@ -94,22 +87,10 @@
             position: relative;
             overflow: hidden;
         }
-        .menu-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--stec-blue);
-        }
+        .menu-card:hover { transform: translateY(-10px); border-color: var(--stec-blue); }
         .menu-card i { font-size: 3rem; margin-bottom: 20px; display: block; }
         .menu-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
         .menu-card p { font-size: 0.95rem; opacity: 0.7; }
-        .menu-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 5px;
-            background: var(--stec-blue);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-        .menu-card:hover::after { transform: scaleX(1); }
 
         .status-bar {
             background: var(--white);
@@ -123,28 +104,13 @@
         }
         .status-item span { color: var(--stec-blue); margin-right: 8px; }
 
-        footer {
-            text-align: center;
-            padding: 40px;
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 10px;
-        }
+        footer { text-align: center; padding: 40px; opacity: 0.6; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <nav>
         <div class="logo">STEC <span>SEMI 2nd</span></div>
-        <button class="theme-toggle" onclick="toggleTheme()">🌓 MODE</button>
     </nav>
 
     <div class="hero">
@@ -184,19 +150,6 @@
 
     <footer>
         <p>&copy; 2026 서울기술교육센터 반도체 장비 2기. All Rights Reserved.</p>
-        <p style="margin-top: 10px;"><a href="privacy.html" style="color: inherit; text-decoration: none;">개인정보처리방침</a></p>
     </footer>
-
-    <script>
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-    </script>
 </body>
 </html>

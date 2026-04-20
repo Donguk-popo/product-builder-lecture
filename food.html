@@ -29,72 +29,43 @@
             --user-item-bg: #fff9db;
             --user-item-border: #fcc419;
         }
-
-        [data-theme="dark"] {
-            --bg: #12141a;
-            --white: #1c1f26;
-            --user-item-bg: #2d2a15;
-            --user-item-border: #fcc419;
-        }
-
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; transition: all 0.3s; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; line-height: 1.6; }
         nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index: 100; }
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); text-align: center; }
         .intro-text { text-align: center; margin-bottom: 40px; color: #747d8c; }
-
-        /* Form */
         .add-section { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px; border: 2px dashed var(--primary); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 20px; }
         .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
-        .add-btn { background: var(--primary); color: white; border: none; padding: 0 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-
-        /* Grid */
+        .add-btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); }
         .res-card.user-added { background: var(--user-item-bg); border: 2px solid var(--user-item-border); }
-        
-        /* Clickable Title */
-        .res-title-btn { background: none; border: none; padding: 0; text-align: left; cursor: pointer; width: 100%; font-family: inherit; }
-        .res-title-btn h3 { margin: 0 0 10px 0; font-size: 1.4rem; color: var(--stec-blue); text-decoration: underline; text-decoration-color: rgba(0,74,153,0.3); transition: 0.2s; }
-        .res-title-btn:hover h3 { color: var(--primary); }
-
+        .res-link { text-decoration: none; display: block; margin-bottom: 10px; }
+        .res-link h3 { margin: 0; font-size: 1.4rem; color: var(--stec-blue); text-decoration: underline; text-decoration-color: rgba(0,74,153,0.3); }
+        .res-link:hover h3 { color: var(--primary); }
         .res-card .zone { font-size: 0.85rem; font-weight: bold; background: #eee; padding: 3px 8px; border-radius: 5px; color: #666; margin-bottom: 10px; display: inline-block; }
-        
-        .vote-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
-        .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .res-card p { font-size: 0.95rem; color: #57606f; margin-bottom: 15px; }
+        .action-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; flex-wrap: wrap; }
+        .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
         .vote-btn.voted { background: #eee; cursor: not-allowed; opacity: 0.6; }
-        .vote-btn.up:hover:not(.voted) { border-color: #2ed573; color: #2ed573; }
-        .vote-btn.down:hover:not(.voted) { border-color: #ff4757; color: #ff4757; }
-
-        /* Modal */
+        .review-btn { background: #f1f2f6; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: var(--white); width: 90%; max-width: 600px; max-height: 80vh; border-radius: 30px; padding: 40px; position: relative; overflow-y: auto; }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
-        
-        .map-btn { display: block; width: 100%; padding: 15px; background: #2ed573; color: white; text-align: center; text-decoration: none; border-radius: 15px; font-weight: 800; margin: 20px 0; }
-        
-        .review-section { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
-        .review-list { margin-bottom: 20px; max-height: 200px; overflow-y: auto; }
-        .review-item { background: #f1f2f6; padding: 10px 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem; }
-        .review-input-group { display: flex; gap: 10px; }
-        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
-        
+        .modal-content { background: var(--white); width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px; padding: 35px; position: relative; overflow-y: auto; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
+        .review-list { margin: 20px 0; border-top: 1px solid #eee; padding-top: 15px; }
+        .review-item { background: #f1f2f6; padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
+        .review-input-group { display: flex; gap: 10px; margin-top: 15px; }
+        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div>
-        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
-    </nav>
-
+    <nav><div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>🍱 화곡동 맛집 리스트</h1>
-        <p class="intro-text">반도체 장비 2기 원우들이 추천하는 진짜 밥집 (이름 클릭시 상세정보)</p>
-
+        <p class="intro-text">이름 클릭 시 지도로 바로 이동! '후기' 버튼으로 생각을 공유하세요.</p>
         <section class="add-section">
             <div class="form-grid">
                 <input type="text" id="new-res-name" placeholder="식당 이름">
@@ -102,34 +73,23 @@
                 <button class="add-btn" onclick="addNewItem()">추가하기</button>
             </div>
         </section>
-
         <div id="food-list" class="list-grid"></div>
     </div>
-
-    <!-- Modal Layout -->
-    <div id="res-modal" class="modal">
+    <div id="review-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">&times;</button>
-            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--stec-blue); font-size: 2.2rem; margin-top: 0;"></h2>
-            <p id="modal-desc" style="font-size: 1.1rem; color: #666;"></p>
-            
-            <a id="modal-map-link" href="#" target="_blank" class="map-btn">📍 네이버 지도로 위치 보기</a>
-
-            <div class="review-section">
-                <h3>💬 원우들 한줄평</h3>
-                <div id="modal-reviews" class="review-list"></div>
-                <div class="review-input-group">
-                    <input type="text" id="review-text" class="review-input" placeholder="후기를 남겨주세요!">
-                    <button class="add-btn" onclick="addReview()">등록</button>
-                </div>
+            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--stec-blue); margin: 0;"></h2>
+            <div id="modal-reviews" class="review-list"></div>
+            <div class="review-input-group">
+                <input type="text" id="review-text" class="review-input" placeholder="후기를 남겨주세요!">
+                <button class="add-btn" style="padding: 10px 20px;" onclick="addReview()">등록</button>
             </div>
         </div>
     </div>
-
     <script>
         const defaultFoods = [
             { id: 1, name: "화곡영양족발", zone: "화곡역", desc: "시장 안 전설! 쫀득한 족발과 순대국 서비스." },
-            { id: 2, name: "전주뼈해장국", zone: "강서구청", desc: "고기가 산더미처럼 쌓여 나오는 찐 해장 성지." },
+            { id: 2, name: "전주뼈해장국", zone: "강서구청", desc: "고기가 산더미처럼 쌓여 나오는 찐 해장 맛집." },
             { id: 3, name: "오남매닭갈비", zone: "화곡역", desc: "철판에서 볶아지는 매콤한 맛! 볶음밥 필수." },
             { id: 4, name: "광영수산", zone: "까치산역", desc: "가성비 회 맛집! 푸짐한 스키다시가 특징." },
             { id: 5, name: "대왕곱창", zone: "까치산역", desc: "곱이 꽉 찬 소곱창! 고소함의 끝판왕." },
@@ -149,97 +109,54 @@
             { id: 19, name: "신월동 탕수육", zone: "신월/화곡", desc: "고기 함량이 높은 바삭한 탕수육 맛집." },
             { id: 20, name: "본가탕탕이", zone: "강서구청", desc: "낙지 탕탕이와 연포탕으로 기력 보충!" }
         ];
-
-        let state = JSON.parse(localStorage.getItem('foodState')) || {
-            userAdded: [],
-            votes: {}, // { id: {up: 0, down: 0} }
-            votedIds: [], // ['id1', 'id2']
-            reviews: {} // { id: ['review1', 'review2'] }
-        };
-
+        let state = JSON.parse(localStorage.getItem('foodStateV3')) || { userAdded: [], votes: {}, votedIds: [], reviews: {} };
         let currentActiveId = null;
-
-        function saveState() { localStorage.setItem('foodState', JSON.stringify(state)); }
-
+        function saveState() { localStorage.setItem('foodStateV3', JSON.stringify(state)); }
         function renderList() {
             const listEl = document.getElementById('food-list');
             listEl.innerHTML = '';
             [...defaultFoods, ...state.userAdded].forEach(item => {
-                const voteInfo = state.votes[item.id] || { up: 0, down: 0 };
-                const hasVoted = state.votedIds.includes(String(item.id));
+                const v = state.votes[item.id] || { up: 0, down: 0 };
+                const hasV = state.votedIds.includes(String(item.id));
                 const card = document.createElement('div');
                 card.className = `res-card ${item.id.toString().startsWith('u') ? 'user-added' : ''}`;
-                card.innerHTML = `
-                    <div>
-                        <span class="zone">${item.zone || '학생 제보'}</span>
-                        <button class="res-title-btn" onclick="openModal('${item.id}', '${item.name}', '${item.desc}')">
-                            <h3>${item.name}</h3>
-                        </button>
-                        <p>${item.desc.substring(0, 40)}...</p>
-                    </div>
-                    <div class="vote-area">
-                        <button class="vote-btn up ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${voteInfo.up}</span></button>
-                        <button class="vote-btn down ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${voteInfo.down}</span></button>
-                    </div>
-                `;
+                card.innerHTML = `<div><span class="zone">${item.zone || '학생 제보'}</span><a href="https://search.naver.com/search.naver?query=화곡동+${item.name}" target="_blank" class="res-link"><h3>${item.name}</h3></a><p>${item.desc}</p></div><div class="action-area"><button class="vote-btn up ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${v.up}</span></button><button class="vote-btn down ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${v.down}</span></button><button class="review-btn" onclick="openReviewModal('${item.id}', '${item.name}')">💬 후기</button></div>`;
                 listEl.appendChild(card);
             });
         }
-
         function addNewItem() {
             const name = document.getElementById('new-res-name').value;
             const desc = document.getElementById('new-res-desc').value;
-            if (!name || !desc) return alert('내용을 입력하세요!');
-            const newItem = { id: 'u' + Date.now(), name, desc, zone: '학생 제보' };
-            state.userAdded.push(newItem);
-            saveState();
-            renderList();
-            document.getElementById('new-res-name').value = '';
-            document.getElementById('new-res-desc').value = '';
+            if (!name || !desc) return alert('내용 입력!');
+            state.userAdded.push({ id: 'u' + Date.now(), name, desc, zone: '학생 제보' });
+            saveState(); renderList();
+            document.getElementById('new-res-name').value = ''; document.getElementById('new-res-desc').value = '';
         }
-
         function vote(id, type) {
-            if (state.votedIds.includes(String(id))) return alert('이미 투표하셨습니다!');
+            if (state.votedIds.includes(String(id))) return alert('이미 투표함!');
             if (!state.votes[id]) state.votes[id] = { up: 0, down: 0 };
-            state.votes[id][type]++;
-            state.votedIds.push(String(id));
-            saveState();
-            renderList();
+            state.votes[id][type]++; state.votedIds.push(String(id));
+            saveState(); renderList();
         }
-
-        function openModal(id, name, desc) {
-            currentActiveId = id;
-            document.getElementById('modal-name').innerText = name;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal-map-link').href = `https://search.naver.com/search.naver?query=화곡동+${name}`;
-            renderReviews();
-            document.getElementById('res-modal').style.display = 'flex';
+        function openReviewModal(id, name) {
+            currentActiveId = id; document.getElementById('modal-name').innerText = name;
+            renderReviews(); document.getElementById('review-modal').style.display = 'flex';
         }
-
-        function closeModal() { document.getElementById('res-modal').style.display = 'none'; }
-
+        function closeModal() { document.getElementById('review-modal').style.display = 'none'; }
         function renderReviews() {
-            const list = document.getElementById('modal-reviews');
-            list.innerHTML = '';
+            const list = document.getElementById('modal-reviews'); list.innerHTML = '';
             (state.reviews[currentActiveId] || []).forEach(rev => {
-                const div = document.createElement('div');
-                div.className = 'review-item';
-                div.innerText = rev;
-                list.appendChild(div);
+                const div = document.createElement('div'); div.className = 'review-item'; div.innerText = rev; list.appendChild(div);
             });
+            if(list.innerHTML === '') list.innerHTML = '<p style="color:#ccc; text-align:center;">첫 후기를 남겨보세요!</p>';
         }
-
         function addReview() {
-            const text = document.getElementById('review-text').value;
-            if (!text) return;
+            const text = document.getElementById('review-text').value; if (!text) return;
             if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
-            state.reviews[currentActiveId].push(text);
-            saveState();
-            renderReviews();
+            state.reviews[currentActiveId].push(text); saveState(); renderReviews();
             document.getElementById('review-text').value = '';
         }
-
-        window.onclick = (e) => { if(e.target == document.getElementById('res-modal')) closeModal(); };
+        window.onclick = (e) => { if(e.target == document.getElementById('review-modal')) closeModal(); };
         renderList();
     </script>
 </body>

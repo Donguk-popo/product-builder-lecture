@@ -30,66 +30,28 @@
         body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--stec-light); color: var(--text); line-height: 1.6; }
         nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; }
         nav a { color: white; text-decoration: none; font-weight: bold; }
-        
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
         h1 { font-size: 2.5rem; color: var(--stec-blue); text-align: center; margin-bottom: 50px; }
-
         .timeline { position: relative; padding-left: 30px; border-left: 4px solid var(--stec-blue); }
         .timeline-item { position: relative; margin-bottom: 40px; padding: 25px; background: var(--white); border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -41px;
-            top: 30px;
-            width: 18px;
-            height: 18px;
-            background: var(--stec-blue);
-            border-radius: 50%;
-            border: 4px solid var(--white);
-        }
+        .timeline-item::before { content: ''; position: absolute; left: -41px; top: 30px; width: 18px; height: 18px; background: var(--stec-blue); border-radius: 50%; border: 4px solid var(--white); }
         .week { font-weight: 800; color: var(--stec-blue); font-size: 1.2rem; display: block; margin-bottom: 10px; }
         .timeline-item h3 { margin: 0 0 10px 0; font-size: 1.4rem; }
         .timeline-item p { margin: 0; opacity: 0.8; }
-        
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">STEC <span>SEMI 2nd</span></div>
-        <a href="index.html">홈으로</a>
-    </nav>
-
+    <nav><div class="logo">STEC <span>SEMI 2nd</span></div><a href="index.html">홈으로</a></nav>
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>📅 교육 커리큘럼</h1>
-
         <div class="timeline">
-            <div class="timeline-item">
-                <span class="week">1~2주차</span>
-                <h3>반도체 기초 및 소자공학</h3>
-                <p>반도체 산업의 이해, 기초 물리, 소자 특성 및 동작 원리 습득</p>
-            </div>
-            <div class="timeline-item">
-                <span class="week">3~6주차</span>
-                <h3>8대 공정 기술 심화</h3>
-                <p>Photo, Etch, Clean, Diffusion, Thin Film 등 핵심 공정 이론 및 실무</p>
-            </div>
-            <div class="timeline-item">
-                <span class="week">7~10주차</span>
-                <h3>장비 유지보수 및 CS 실습</h3>
-                <p>진공 기술, RF 시스템, 장비 PM 실습 및 트러블슈팅 대응 능력 배양</p>
-            </div>
-            <div class="timeline-item">
-                <span class="week">11~14주차</span>
-                <h3>자동화 제어 및 PLC</h3>
-                <p>전기 전자 기초, PLC 제어 실습, 반도체 장비 자동화 시스템 이해</p>
-            </div>
-            <div class="timeline-item">
-                <span class="week">15~16주차</span>
-                <h3>실무 프로젝트 및 취업 지원</h3>
-                <p>종합 프로젝트 수행, 이력서 첨삭 및 면접 컨설팅 (취업 성공!)</p>
-            </div>
+            <div class="timeline-item"><span class="week">1~2주차</span><h3>반도체 기초 및 소자공학</h3><p>반도체 산업의 이해, 기초 물리, 소자 특성 및 동작 원리 습득</p></div>
+            <div class="timeline-item"><span class="week">3~6주차</span><h3>8대 공정 기술 심화</h3><p>Photo, Etch, Clean, Diffusion, Thin Film 등 핵심 공정 이론 및 실무</p></div>
+            <div class="timeline-item"><span class="week">7~10주차</span><h3>장비 유지보수 및 CS 실습</h3><p>진공 기술, RF 시스템, 장비 PM 실습 및 트러블슈팅 대응 능력 배양</p></div>
+            <div class="timeline-item"><span class="week">11~14주차</span><h3>자동화 제어 및 PLC</h3><p>전기 전자 기초, PLC 제어 실습, 반도체 장비 자동화 시스템 이해</p></div>
+            <div class="timeline-item"><span class="week">15~16주차</span><h3>실무 프로젝트 및 취업 지원</h3><p>종합 프로젝트 수행, 이력서 첨삭 및 면접 컨설팅 (취업 성공!)</p></div>
         </div>
     </div>
 </body>

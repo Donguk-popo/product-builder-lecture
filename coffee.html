@@ -29,68 +29,43 @@
             --user-item-bg: #fdf2e9;
             --user-item-border: #e67e22;
         }
-
-        [data-theme="dark"] {
-            --bg: #1a1a1a;
-            --white: #2c2c2c;
-            --user-item-bg: #3e2723;
-            --user-item-border: #e67e22;
-        }
-
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #3e2723; transition: all 0.3s; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #3e2723; line-height: 1.6; }
         nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index: 100; }
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; color: var(--primary); text-align: center; }
         .intro-text { text-align: center; margin-bottom: 40px; color: #8d6e63; }
-
         .add-section { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px; border: 2px dashed var(--primary); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 20px; }
         .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
-        .add-btn { background: var(--primary); color: white; border: none; padding: 0 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-
+        .add-btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); }
         .res-card.user-added { background: var(--user-item-bg); border: 2px solid var(--user-item-border); }
-        
-        .res-title-btn { background: none; border: none; padding: 0; text-align: left; cursor: pointer; width: 100%; font-family: inherit; }
-        .res-title-btn h3 { margin: 0 0 10px 0; font-size: 1.4rem; color: var(--primary); text-decoration: underline; text-decoration-color: rgba(111,78,55,0.3); transition: 0.2s; }
-        .res-title-btn:hover h3 { opacity: 0.7; }
-
+        .res-link { text-decoration: none; display: block; margin-bottom: 10px; }
+        .res-link h3 { margin: 0; font-size: 1.4rem; color: var(--primary); text-decoration: underline; text-decoration-color: rgba(111,78,55,0.3); }
+        .res-link:hover h3 { opacity: 0.7; }
         .res-card .zone { font-size: 0.85rem; font-weight: bold; background: #efebe9; padding: 3px 8px; border-radius: 5px; color: #5d4037; margin-bottom: 10px; display: inline-block; }
-        
-        .vote-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
-        .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; transition: all 0.2s; color: inherit; }
+        .res-card p { font-size: 0.95rem; color: #4e342e; margin-bottom: 15px; }
+        .action-area { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; flex-wrap: wrap; }
+        .vote-btn { background: none; border: 1px solid #ddd; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; color: inherit; }
         .vote-btn.voted { background: #eee; cursor: not-allowed; opacity: 0.6; }
-        .vote-btn.up:hover:not(.voted) { border-color: #2ed573; color: #2ed573; }
-        .vote-btn.down:hover:not(.voted) { border-color: #ff4757; color: #ff4757; }
-
+        .review-btn { background: #fdf5e6; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: var(--white); width: 90%; max-width: 600px; max-height: 80vh; border-radius: 30px; padding: 40px; position: relative; overflow-y: auto; }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
-        
-        .map-btn { display: block; width: 100%; padding: 15px; background: #6f4e37; color: white; text-align: center; text-decoration: none; border-radius: 15px; font-weight: 800; margin: 20px 0; }
-        
-        .review-section { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
-        .review-list { margin-bottom: 20px; max-height: 200px; overflow-y: auto; }
-        .review-item { background: #f1f2f6; padding: 10px 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem; }
-        .review-input-group { display: flex; gap: 10px; }
-        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
-        
+        .modal-content { background: var(--white); width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px; padding: 35px; position: relative; overflow-y: auto; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
+        .review-list { margin: 20px 0; border-top: 1px solid #eee; padding-top: 15px; }
+        .review-item { background: #fdf5e6; padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
+        .review-input-group { display: flex; gap: 10px; margin-top: 15px; }
+        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div>
-        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
-    </nav>
-
+    <nav><div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>☕ 화곡동 카페 리스트</h1>
-        <p class="intro-text">반도체 장비 2기 원우들의 힐링 아지트 (이름 클릭시 상세정보)</p>
-
+        <p class="intro-text">이름 클릭 시 지도로 바로 이동! '후기' 버튼으로 생각을 공유하세요.</p>
         <section class="add-section">
             <div class="form-grid">
                 <input type="text" id="new-cafe-name" placeholder="카페 이름">
@@ -98,30 +73,19 @@
                 <button class="add-btn" onclick="addNewCafe()">추가하기</button>
             </div>
         </section>
-
         <div id="cafe-list" class="list-grid"></div>
     </div>
-
-    <!-- Modal Layout -->
-    <div id="cafe-modal" class="modal">
+    <div id="review-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">&times;</button>
-            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--primary); font-size: 2.2rem; margin-top: 0;"></h2>
-            <p id="modal-desc" style="font-size: 1.1rem; color: #666;"></p>
-            
-            <a id="modal-map-link" href="#" target="_blank" class="map-btn">📍 네이버 지도로 위치 보기</a>
-
-            <div class="review-section">
-                <h3>💬 원우들 한줄평</h3>
-                <div id="modal-reviews" class="review-list"></div>
-                <div class="review-input-group">
-                    <input type="text" id="review-text" class="review-input" placeholder="카페 후기를 남겨주세요!">
-                    <button class="add-btn" onclick="addReview()">등록</button>
-                </div>
+            <h2 id="modal-name" style="font-family: 'Jua'; color: var(--primary); margin: 0;"></h2>
+            <div id="modal-reviews" class="review-list"></div>
+            <div class="review-input-group">
+                <input type="text" id="review-text" class="review-input" placeholder="카페 후기를 남겨주세요!">
+                <button class="add-btn" style="padding: 10px 20px;" onclick="addReview()">등록</button>
             </div>
         </div>
     </div>
-
     <script>
         const defaultCafes = [
             { id: 1, name: "투썸플레이스 화곡역점", zone: "화곡역", desc: "공부하기 좋은 넓은 좌석과 맛있는 케이크." },
@@ -145,97 +109,54 @@
             { id: 19, name: "봉명동내커피", zone: "화곡동", desc: "배달로도 유명한 다양한 간식거리와 커피." },
             { id: 20, name: "빽다방 강서구청점", zone: "강서구청", desc: "푸짐한 양의 음료와 사라다빵 맛집." }
         ];
-
-        let state = JSON.parse(localStorage.getItem('cafeState')) || {
-            userAdded: [],
-            votes: {},
-            votedIds: [],
-            reviews: {}
-        };
-
+        let state = JSON.parse(localStorage.getItem('cafeStateV3')) || { userAdded: [], votes: {}, votedIds: [], reviews: {} };
         let currentActiveId = null;
-
-        function saveState() { localStorage.setItem('cafeState', JSON.stringify(state)); }
-
+        function saveState() { localStorage.setItem('cafeStateV3', JSON.stringify(state)); }
         function renderList() {
             const listEl = document.getElementById('cafe-list');
             listEl.innerHTML = '';
             [...defaultCafes, ...state.userAdded].forEach(item => {
-                const voteInfo = state.votes[item.id] || { up: 0, down: 0 };
-                const hasVoted = state.votedIds.includes(String(item.id));
+                const v = state.votes[item.id] || { up: 0, down: 0 };
+                const hasV = state.votedIds.includes(String(item.id));
                 const card = document.createElement('div');
                 card.className = `res-card ${item.id.toString().startsWith('u') ? 'user-added' : ''}`;
-                card.innerHTML = `
-                    <div>
-                        <span class="zone">${item.zone || '학생 제보'}</span>
-                        <button class="res-title-btn" onclick="openModal('${item.id}', '${item.name}', '${item.desc}')">
-                            <h3>${item.name}</h3>
-                        </button>
-                        <p>${item.desc.substring(0, 40)}...</p>
-                    </div>
-                    <div class="vote-area">
-                        <button class="vote-btn up ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${voteInfo.up}</span></button>
-                        <button class="vote-btn down ${hasVoted ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${voteInfo.down}</span></button>
-                    </div>
-                `;
+                card.innerHTML = `<div><span class="zone">${item.zone || '학생 제보'}</span><a href="https://search.naver.com/search.naver?query=화곡동+카페+${item.name}" target="_blank" class="res-link"><h3>${item.name}</h3></a><p>${item.desc}</p></div><div class="action-area"><button class="vote-btn up ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'up')">👍 <span>${v.up}</span></button><button class="vote-btn down ${hasV ? 'voted' : ''}" onclick="vote('${item.id}', 'down')">👎 <span>${v.down}</span></button><button class="review-btn" onclick="openReviewModal('${item.id}', '${item.name}')">💬 후기</button></div>`;
                 listEl.appendChild(card);
             });
         }
-
         function addNewCafe() {
             const name = document.getElementById('new-cafe-name').value;
             const desc = document.getElementById('new-cafe-desc').value;
-            if (!name || !desc) return alert('내용을 입력하세요!');
-            const newItem = { id: 'u' + Date.now(), name, desc, zone: '학생 제보' };
-            state.userAdded.push(newItem);
-            saveState();
-            renderList();
-            document.getElementById('new-cafe-name').value = '';
-            document.getElementById('new-cafe-desc').value = '';
+            if (!name || !desc) return alert('내용 입력!');
+            state.userAdded.push({ id: 'u' + Date.now(), name, desc, zone: '학생 제보' });
+            saveState(); renderList();
+            document.getElementById('new-cafe-name').value = ''; document.getElementById('new-cafe-desc').value = '';
         }
-
         function vote(id, type) {
-            if (state.votedIds.includes(String(id))) return alert('이미 투표하셨습니다!');
+            if (state.votedIds.includes(String(id))) return alert('이미 투표함!');
             if (!state.votes[id]) state.votes[id] = { up: 0, down: 0 };
-            state.votes[id][type]++;
-            state.votedIds.push(String(id));
-            saveState();
-            renderList();
+            state.votes[id][type]++; state.votedIds.push(String(id));
+            saveState(); renderList();
         }
-
-        function openModal(id, name, desc) {
-            currentActiveId = id;
-            document.getElementById('modal-name').innerText = name;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal-map-link').href = `https://search.naver.com/search.naver?query=화곡동+카페+${name}`;
-            renderReviews();
-            document.getElementById('cafe-modal').style.display = 'flex';
+        function openReviewModal(id, name) {
+            currentActiveId = id; document.getElementById('modal-name').innerText = name;
+            renderReviews(); document.getElementById('review-modal').style.display = 'flex';
         }
-
-        function closeModal() { document.getElementById('cafe-modal').style.display = 'none'; }
-
+        function closeModal() { document.getElementById('review-modal').style.display = 'none'; }
         function renderReviews() {
-            const list = document.getElementById('modal-reviews');
-            list.innerHTML = '';
+            const list = document.getElementById('modal-reviews'); list.innerHTML = '';
             (state.reviews[currentActiveId] || []).forEach(rev => {
-                const div = document.createElement('div');
-                div.className = 'review-item';
-                div.innerText = rev;
-                list.appendChild(div);
+                const div = document.createElement('div'); div.className = 'review-item'; div.innerText = rev; list.appendChild(div);
             });
+            if(list.innerHTML === '') list.innerHTML = '<p style="color:#ccc; text-align:center;">첫 후기를 남겨보세요!</p>';
         }
-
         function addReview() {
-            const text = document.getElementById('review-text').value;
-            if (!text) return;
+            const text = document.getElementById('review-text').value; if (!text) return;
             if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
-            state.reviews[currentActiveId].push(text);
-            saveState();
-            renderReviews();
+            state.reviews[currentActiveId].push(text); saveState(); renderReviews();
             document.getElementById('review-text').value = '';
         }
-
-        window.onclick = (e) => { if(e.target == document.getElementById('cafe-modal')) closeModal(); };
+        window.onclick = (e) => { if(e.target == document.getElementById('review-modal')) closeModal(); };
         renderList();
     </script>
 </body>
