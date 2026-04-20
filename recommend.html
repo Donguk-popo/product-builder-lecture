@@ -6,21 +6,21 @@
     <title>맛집 추천하기 | 화곡식후경</title>
     <style>
         :root {
-            --bg-color: #fff9f5;
-            --text-color: #2c3e50;
-            --button-bg: #e67e22;
-            --button-hover: #d35400;
-            --container-bg: #ffffff;
-            --nav-bg: #e67e22;
-            --nav-text: #ffffff;
+            --bg-color: #fdf5e6;
+            --text-color: #4a3728;
+            --button-bg: #d35400;
+            --button-hover: #a04000;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: #4a3728;
+            --nav-text: #fdf5e6;
         }
 
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
-            --text-color: #ecf0f1;
-            --button-bg: #d35400;
-            --button-hover: #e67e22;
-            --container-bg: #2c3e50;
+            --text-color: #e0d5c1;
+            --button-bg: #e67e22;
+            --button-hover: #d35400;
+            --container-bg: rgba(44, 44, 44, 0.95);
             --nav-bg: #000000;
         }
 
@@ -28,6 +28,10 @@
             font-family: 'Pretendard', sans-serif;
             margin: 0;
             background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(211, 84, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(211, 84, 0, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-color);
             line-height: 1.6;
         }
@@ -39,9 +43,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        nav a { color: var(--nav-text); text-decoration: none; margin-left: 20px; font-weight: 500; }
-        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
 
         .main-content {
             max-width: 800px;
@@ -51,52 +54,60 @@
 
         .container {
             background-color: var(--container-bg);
-            padding: 40px;
+            padding: 50px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(211, 84, 0, 0.1);
         }
 
-        h1 { text-align: center; color: var(--button-bg); }
-        p.intro { text-align: center; margin-bottom: 30px; }
+        h1 { text-align: center; color: var(--button-bg); font-size: 2.5rem; margin-bottom: 10px; }
+        p.intro { text-align: center; margin-bottom: 40px; font-size: 1.1rem; }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 10px; font-weight: bold; font-size: 1.1rem; }
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 14px;
+            border: 2px solid #eee;
+            border-radius: 12px;
             background-color: var(--bg-color);
             color: var(--text-color);
             box-sizing: border-box;
             font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--button-bg);
         }
         
         button.submit-btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background-color: var(--button-bg);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(211, 84, 0, 0.3);
+            margin-top: 10px;
         }
-        button.submit-btn:hover { background-color: var(--button-hover); }
+        button.submit-btn:hover { 
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(211, 84, 0, 0.4);
+        }
 
         .notice {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fdf2e9;
+            margin-top: 40px;
+            padding: 25px;
+            background-color: rgba(211, 84, 0, 0.05);
+            border-left: 5px solid var(--button-bg);
             border-radius: 10px;
-            font-size: 0.9rem;
-            color: #7e4a35;
-        }
-        [data-theme="dark"] .notice {
-            background-color: #3e2723;
-            color: #d7ccc8;
+            font-size: 1rem;
         }
     </style>
 </head>
