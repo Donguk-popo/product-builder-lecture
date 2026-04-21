@@ -21,6 +21,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
 
         header {
@@ -30,8 +31,6 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
             z-index: 10;
         }
 
@@ -45,6 +44,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            position: relative;
         }
 
         .message {
@@ -125,12 +125,16 @@
             color: var(--kakao-brown);
         }
 
-        #send-btn:hover { background-color: #fada0a; }
-
-        /* Scrollbar */
-        #chat-container::-webkit-scrollbar { width: 6px; }
-        #chat-container::-webkit-scrollbar-track { background: transparent; }
-        #chat-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        #loader {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #777;
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -142,7 +146,7 @@
     </header>
 
     <div id="chat-container">
-        <!-- 메시지들이 여기에 추가됩니다 -->
+        <div id="loader">채팅 서버에 연결 중...</div>
     </div>
 
     <div class="input-area">
@@ -151,110 +155,98 @@
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <script>
-        // Firebase 설정
-        const firebaseConfig = {
-            databaseURL: "https://stec-chat-default-rtdb.firebaseio.com" 
-        };
-        
-        let database;
-        let chatRef;
-
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            database = firebase.database();
-            chatRef = database.ref('messages');
-        } catch (e) {
-            console.error("Firebase 초기화 오류:", e);
-        }
-        
-        const chatContainer = document.getElementById('chat-container');
-        const nameInput = document.getElementById('name-input');
-        const messageInput = document.getElementById('message-input');
-
-        // 내 고유 ID 고정
-        let myId = localStorage.getItem('stec_chat_user_id');
-        if (!myId) {
-            myId = 'user_' + Math.random().toString(36).substr(2, 9);
-            localStorage.setItem('stec_chat_user_id', myId);
-        }
-
-        // 메시지 렌더링 함수
-        function renderAllMessages(data) {
-            chatContainer.innerHTML = '';
+        (function() {
+            const chatContainer = document.getElementById('chat-container');
+            const loader = document.getElementById('loader');
             
-            if (!data) {
-                appendSystemMessage("채팅방에 연결되었습니다. 첫 메시지를 남겨보세요!");
-                return;
-            }
-
-            // Firebase 데이터를 배열로 변환하여 시간순 정렬
-            const messages = Object.values(data);
-            
-            messages.forEach(msg => {
-                const msgDiv = document.createElement('div');
-                const isMine = msg.senderId === myId;
-                msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
-                
-                msgDiv.innerHTML = `
-                    <div class="user-name">${msg.name}</div>
-                    <div class="bubble">${msg.content}</div>
-                    <div class="time">${msg.time}</div>
-                `;
-                chatContainer.appendChild(msgDiv);
-            });
-            
-            // 화면 하단으로 스크롤
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function appendSystemMessage(text) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'message other';
-            msgDiv.style.alignSelf = 'center';
-            msgDiv.style.opacity = '0.7';
-            msgDiv.innerHTML = `<div class="bubble" style="background:#eee; border-radius:10px; font-size:0.8rem;">${text}</div>`;
-            chatContainer.appendChild(msgDiv);
-        }
-
-        // [핵심] 모든 메시지를 실시간으로 감시하고 갱신
-        if (chatRef) {
-            chatRef.limitToLast(50).on('value', (snapshot) => {
-                const data = snapshot.val();
-                renderAllMessages(data);
-            });
-        }
-
-        function sendMessage() {
-            const name = nameInput.value.trim() || "익명";
-            const content = messageInput.value.trim();
-
-            if (!content) return;
-
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-
-            const newMsg = {
-                senderId: myId,
-                name: name,
-                content: content,
-                time: timeStr,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
+            // Firebase 설정 (Public Read/Write가 허용된 DB여야 함)
+            const firebaseConfig = {
+                databaseURL: "https://stec-chat-default-rtdb.firebaseio.com" 
             };
 
-            // Firebase에 저장만 하면 on('value')가 감지해서 화면을 그려줍니다.
-            if (chatRef) {
-                chatRef.push(newMsg).catch(err => {
-                    alert("메시지 전송에 실패했습니다. 인터넷 연결을 확인해주세요.");
-                });
+            let chatRef;
+            const myId = localStorage.getItem('stec_chat_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('stec_chat_user_id', myId);
+
+            function appendMessage(msg, type = 'normal') {
+                if(loader) loader.style.display = 'none';
+                const msgDiv = document.createElement('div');
+                const isMine = msg.senderId === myId;
+                
+                if (type === 'system') {
+                    msgDiv.className = 'message other';
+                    msgDiv.style.alignSelf = 'center';
+                    msgDiv.innerHTML = `<div class="bubble" style="background:#eee; font-size:0.8rem;">${msg.content}</div>`;
+                } else {
+                    msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
+                    msgDiv.innerHTML = `
+                        <div class="user-name">${msg.name || '익명'}</div>
+                        <div class="bubble">${msg.content}</div>
+                        <div class="time">${msg.time || ''}</div>
+                    `;
+                }
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
 
-            messageInput.value = '';
-        }
+            function initFirebase() {
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    const database = firebase.database();
+                    chatRef = database.ref('messages');
+
+                    chatRef.limitToLast(50).on('value', (snapshot) => {
+                        chatContainer.innerHTML = '';
+                        const data = snapshot.val();
+                        if (!data) {
+                            appendMessage({ content: '대화 기록이 없습니다. 먼저 말을 걸어보세요!' }, 'system');
+                        } else {
+                            Object.values(data).forEach(msg => appendMessage(msg));
+                        }
+                    }, (error) => {
+                        console.error("Firebase Error:", error);
+                        loader.innerText = "서버 연결 오류: " + error.message;
+                    });
+                } catch (e) {
+                    console.error("Init Error:", e);
+                    loader.innerText = "초기화 오류가 발생했습니다.";
+                }
+            }
+
+            window.sendMessage = function() {
+                const nameInput = document.getElementById('name-input');
+                const messageInput = document.getElementById('message-input');
+                const content = messageInput.value.trim();
+                
+                if (!content || !chatRef) return;
+
+                const newMsg = {
+                    senderId: myId,
+                    name: nameInput.value.trim() || "익명",
+                    content: content,
+                    time: new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                chatRef.push(newMsg);
+                messageInput.value = '';
+            };
+
+            // SDK 로드 대기 후 초기화
+            const checkFirebase = setInterval(() => {
+                if (typeof firebase !== 'undefined') {
+                    clearInterval(checkFirebase);
+                    initFirebase();
+                }
+            }, 100);
+        })();
     </script>
 </body>
 </html>
