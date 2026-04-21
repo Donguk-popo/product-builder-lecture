@@ -11,7 +11,6 @@
             --kakao-brown: #3c1e1e;
             --chat-bg: #bacee0;
             --my-bubble: #fee500;
-            --other-bubble: #ffffff;
         }
 
         body {
@@ -72,15 +71,15 @@
             line-height: 1.4;
             position: relative;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            background: white; /* Default */
         }
 
         .message.mine .bubble {
-            background-color: var(--my-bubble);
+            background-color: var(--my-bubble) !important;
             border-top-right-radius: 2px;
         }
 
         .message.other .bubble {
-            background-color: var(--other-bubble);
             border-top-left-radius: 2px;
         }
 
@@ -98,17 +97,9 @@
             align-items: center;
         }
 
-        #name-input {
-            width: 80px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
         #message-input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 0.9rem;
@@ -123,6 +114,47 @@
             font-weight: 800;
             cursor: pointer;
             color: var(--kakao-brown);
+        }
+
+        /* 이름 입력 모달 */
+        #name-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 320px;
+            text-align: center;
+        }
+
+        .modal-content h2 { margin-top: 0; font-size: 1.2rem; }
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background: var(--kakao-yellow);
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
         #loader {
@@ -150,9 +182,18 @@
     </div>
 
     <div class="input-area">
-        <input type="text" id="name-input" placeholder="이름" value="익명">
         <input type="text" id="message-input" placeholder="메시지를 입력하세요..." onkeypress="if(event.keyCode==13) sendMessage()">
         <button id="send-btn" onclick="sendMessage()">전송</button>
+    </div>
+
+    <!-- 이름 입력 모달 -->
+    <div id="name-modal">
+        <div class="modal-content">
+            <h2>대화명 설정</h2>
+            <p>채팅방에서 사용할 이름을 적어주세요.</p>
+            <input type="text" id="modal-name-input" placeholder="이름을 입력하세요" maxlength="10">
+            <button onclick="setUserName()">입장하기</button>
+        </div>
     </div>
 
     <!-- Firebase SDKs -->
@@ -163,8 +204,8 @@
         (function() {
             const chatContainer = document.getElementById('chat-container');
             const loader = document.getElementById('loader');
+            const nameModal = document.getElementById('name-modal');
             
-            // Firebase 상세 설정 반영
             const firebaseConfig = {
                 apiKey: "AIzaSyCa_R4StCH81IxkmbPcxxiLiawJMwFxS1M",
                 authDomain: "stec-chat.firebaseapp.com",
@@ -177,8 +218,19 @@
             };
 
             let chatRef;
+            let currentUserName = localStorage.getItem('stec_user_name');
             const myId = localStorage.getItem('stec_chat_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('stec_chat_user_id', myId);
+
+            // 유저 ID 기반 고유 파스텔톤 컬러 생성 함수
+            function getUserColor(userId) {
+                let hash = 0;
+                for (let i = 0; i < userId.length; i++) {
+                    hash = userId.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                const h = Math.abs(hash % 360);
+                return `hsl(${h}, 70%, 90%)`; // 부드러운 파스텔톤
+            }
 
             function appendMessage(msg, type = 'normal') {
                 if(loader) loader.style.display = 'none';
@@ -191,9 +243,11 @@
                     msgDiv.innerHTML = `<div class="bubble" style="background:#eee; font-size:0.8rem;">${msg.content}</div>`;
                 } else {
                     msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
+                    const bubbleColor = isMine ? 'var(--my-bubble)' : getUserColor(msg.senderId);
+                    
                     msgDiv.innerHTML = `
                         <div class="user-name">${msg.name || '익명'}</div>
-                        <div class="bubble">${msg.content}</div>
+                        <div class="bubble" style="background-color: ${bubbleColor}">${msg.content}</div>
                         <div class="time">${msg.time || ''}</div>
                     `;
                 }
@@ -203,9 +257,7 @@
 
             function initFirebase() {
                 try {
-                    if (!firebase.apps.length) {
-                        firebase.initializeApp(firebaseConfig);
-                    }
+                    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
                     const database = firebase.database();
                     chatRef = database.ref('messages');
 
@@ -217,50 +269,51 @@
                         } else {
                             Object.values(data).forEach(msg => appendMessage(msg));
                         }
-                    }, (error) => {
-                        console.error("Firebase Error:", error);
-                        loader.innerText = "서버 연결 오류: " + error.message;
                     });
 
-                    // 연결 상태 실시간 모니터링
                     const statusBadge = document.getElementById('connection-status');
                     database.ref('.info/connected').on('value', (snapshot) => {
                         if (snapshot.val() === true) {
                             statusBadge.innerText = '● Online';
-                            statusBadge.style.background = '#e6fffa';
-                            statusBadge.style.color = '#38a169';
+                            statusBadge.style.background = '#e6fffa'; statusBadge.style.color = '#38a169';
                         } else {
                             statusBadge.innerText = '○ Offline';
-                            statusBadge.style.background = '#fff5f5';
-                            statusBadge.style.color = '#e53e3e';
+                            statusBadge.style.background = '#fff5f5'; statusBadge.style.color = '#e53e3e';
                         }
                     });
-                } catch (e) {
-                    console.error("Init Error:", e);
-                    loader.innerText = "초기화 오류가 발생했습니다.";
-                }
+                } catch (e) { console.error(e); }
             }
 
+            // 이름 설정 함수
+            window.setUserName = function() {
+                const nameInput = document.getElementById('modal-name-input');
+                const name = nameInput.value.trim();
+                if (!name) { alert('이름을 입력해주세요!'); return; }
+                
+                currentUserName = name;
+                localStorage.setItem('stec_user_name', name);
+                nameModal.style.display = 'none';
+            };
+
             window.sendMessage = function() {
-                const nameInput = document.getElementById('name-input');
+                if (!currentUserName) { nameModal.style.display = 'flex'; return; }
                 const messageInput = document.getElementById('message-input');
                 const content = messageInput.value.trim();
-                
                 if (!content || !chatRef) return;
 
-                const newMsg = {
+                chatRef.push({
                     senderId: myId,
-                    name: nameInput.value.trim() || "익명",
+                    name: currentUserName,
                     content: content,
                     time: new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }),
                     timestamp: firebase.database.ServerValue.TIMESTAMP
-                };
-
-                chatRef.push(newMsg);
+                });
                 messageInput.value = '';
             };
 
-            // SDK 로드 대기 후 초기화
+            // 초기 실행 로직
+            if (currentUserName) nameModal.style.display = 'none';
+            
             const checkFirebase = setInterval(() => {
                 if (typeof firebase !== 'undefined') {
                     clearInterval(checkFirebase);
