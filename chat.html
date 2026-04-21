@@ -151,21 +151,64 @@
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
+        // Firebase 설정 (현재는 데모용이며, 실제 사용을 위해서는 Firebase Console에서 본인의 설정을 입력해야 합니다)
+        // 안내: 이 설정은 모든 사용자가 볼 수 있는 공용 공간으로 작동하게 됩니다.
+        const firebaseConfig = {
+            databaseURL: "https://stec-chat-default-rtdb.firebaseio.com" 
+        };
+        
+        // Firebase 초기화 (설정이 없을 경우를 대비한 안전 코드 포함)
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+        } catch (e) {
+            console.error("Firebase 초기화 실패:", e);
+        }
+        
+        const database = firebase.database();
+        const chatRef = database.ref('messages');
+
         const chatContainer = document.getElementById('chat-container');
         const nameInput = document.getElementById('name-input');
         const messageInput = document.getElementById('message-input');
 
-        // 메시지 로드
-        let messages = JSON.parse(localStorage.getItem('stec_chat')) || [
-            { name: "운영자", content: "반갑습니다! 자유롭게 대화 나눠보세요.", time: "오전 10:00", mine: false }
-        ];
+        // 내 고유 ID 생성 (본인 글 구분용)
+        let myId = localStorage.getItem('stec_chat_user_id');
+        if (!myId) {
+            myId = 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('stec_chat_user_id', myId);
+        }
 
-        function renderMessages() {
+        // 메시지 실시간 수신
+        chatRef.limitToLast(50).on('value', (snapshot) => {
+            const data = snapshot.val();
+            renderMessages(data);
+        });
+
+        function renderMessages(data) {
             chatContainer.innerHTML = '';
-            messages.forEach(msg => {
+            
+            // 데이터가 없을 경우 기본 환영 메시지
+            if (!data) {
+                const welcomeDiv = document.createElement('div');
+                welcomeDiv.className = 'message other';
+                welcomeDiv.innerHTML = `
+                    <div class="user-name">운영자</div>
+                    <div class="bubble">반갑습니다! 첫 메시지를 남겨보세요.</div>
+                    <div class="time">방금</div>
+                `;
+                chatContainer.appendChild(welcomeDiv);
+                return;
+            }
+
+            Object.values(data).forEach(msg => {
                 const msgDiv = document.createElement('div');
-                msgDiv.className = `message ${msg.mine ? 'mine' : 'other'}`;
+                const isMine = msg.senderId === myId;
+                msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
                 
                 msgDiv.innerHTML = `
                     <div class="user-name">${msg.name}</div>
@@ -178,30 +221,27 @@
         }
 
         function sendMessage() {
-            const name = nameInput.value.trim();
+            const name = nameInput.value.trim() || "익명";
             const content = messageInput.value.trim();
 
-            if (!name || !content) return;
+            if (!content) return;
 
             const now = new Date();
             const timeStr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
 
             const newMsg = {
+                senderId: myId,
                 name: name,
                 content: content,
                 time: timeStr,
-                mine: true // 본인이 쓴 글로 표시
+                timestamp: firebase.database.ServerValue.TIMESTAMP
             };
 
-            messages.push(newMsg);
-            localStorage.setItem('stec_chat', JSON.stringify(messages));
+            // Firebase에 데이터 저장
+            chatRef.push(newMsg);
             
-            renderMessages();
             messageInput.value = '';
         }
-
-        // 초기 렌더링
-        renderMessages();
     </script>
 </body>
 </html>
