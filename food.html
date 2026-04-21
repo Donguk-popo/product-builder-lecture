@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y857GWRVHE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Y857GWRVHE');
-    </script>
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "welo4j25g7");
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>맛집 / 커피숍 리스트 | STEC 반도체 장비 2기</title>
@@ -27,14 +12,11 @@
             --stec-blue: #004a99;
             --bg: #f8f9fa;
             --white: #ffffff;
-            --top-gold: #ffd700;
-            --top-bronze: #cd7f32;
         }
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; line-height: 1.6; transition: background 0.3s; }
+        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #2f3542; line-height: 1.6; }
         nav { background: var(--stec-blue); padding: 15px 5%; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index: 100; }
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         
-        /* Tab Navigation */
         .tab-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .tab-btn { padding: 12px 30px; border-radius: 50px; border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-family: 'Jua'; }
         .tab-btn.food-tab { background: #ffebeb; color: var(--food-primary); }
@@ -43,266 +25,114 @@
         .tab-btn.coffee-tab.active { background: var(--coffee-primary); color: white; transform: scale(1.05); }
 
         h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; text-align: center; margin-top: 0; }
-        .intro-text { text-align: center; margin-bottom: 40px; color: #747d8c; }
         
-        /* List Sections */
-        .list-section { display: none; }
-        .list-section.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Card Styles */
-        .top-section { margin-bottom: 40px; }
-        .top-title { font-family: 'Jua', sans-serif; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .food-theme .top-title { color: #d4af37; }
-        .coffee-theme .top-title { color: #8d6e63; }
-        
-        .top-badge { color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; }
-        .food-theme .top-badge { background: var(--top-gold); color: #3c1e1e; }
-        .coffee-theme .top-badge { background: var(--top-bronze); }
-
         .add-section { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px; border: 2px dashed #ddd; }
         .food-theme .add-section { border-color: var(--food-primary); }
         .coffee-theme .add-section { border-color: var(--coffee-primary); }
         
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 20px; }
-        .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; }
+        .form-grid input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
         .add-btn { color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .food-theme .add-btn { background: var(--food-primary); }
         .coffee-theme .add-btn { background: var(--coffee-primary); }
         
         .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); position: relative; }
-        
-        /* Rank Styles */
-        .res-card.top-rank { transform: scale(1.02); }
-        .food-theme .res-card.top-rank { background: #fffdf0; border: 2px solid var(--top-gold); }
-        .coffee-theme .res-card.top-rank { background: #faf3e0; border: 2px solid var(--top-bronze); }
-        
-        .rank-tag { position: absolute; top: -10px; left: 20px; color: white; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .food-theme .rank-tag { background: var(--top-gold); color: #3c1e1e; }
-        .coffee-theme .rank-tag { background: var(--top-bronze); }
-
-        .res-link { text-decoration: none; display: block; margin-bottom: 10px; }
-        .res-link h3 { margin: 0; font-size: 1.4rem; text-decoration: underline; text-decoration-color: rgba(0,0,0,0.1); }
-        .food-theme .res-link h3 { color: var(--stec-blue); }
-        .coffee-theme .res-link h3 { color: var(--primary); }
-        .res-link:hover h3 { opacity: 0.7; }
-        
-        .zone { font-size: 0.85rem; font-weight: bold; background: #eee; padding: 3px 8px; border-radius: 5px; color: #666; margin-bottom: 10px; display: inline-block; }
+        .res-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .res-card:hover { transform: translateY(-5px); }
+        .res-card h3 { margin: 0 0 10px; font-size: 1.4rem; color: var(--stec-blue); font-family: 'Jua'; }
         .res-card p { font-size: 0.95rem; color: #57606f; margin-bottom: 15px; }
-        .action-area { border-top: 1px solid #eee; padding-top: 15px; }
-        .review-btn { background: #f1f2f6; border: none; padding: 8px 20px; border-radius: 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; width: 100%; }
-        
-        /* Modal Styles */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: var(--white); width: 90%; max-width: 500px; max-height: 80vh; border-radius: 25px; padding: 35px; position: relative; overflow-y: auto; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #ccc; }
-        .review-list { margin: 20px 0; border-top: 1px solid #eee; padding-top: 15px; }
-        .review-item { background: #f1f2f6; padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
-        .review-input-group { display: flex; gap: 10px; margin-top: 15px; }
-        .review-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--stec-blue); text-decoration: none; font-weight: bold; }
+        .zone { font-size: 0.8rem; background: #eee; padding: 3px 8px; border-radius: 5px; color: #666; margin-bottom: 10px; display: inline-block; }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body class="food-theme">
-    <nav><div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
+    <nav><div class="logo">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
     <div class="container">
-        <a href="index.html" class="back-btn">← 뒤로가기</a>
-        
         <div class="tab-container">
-            <button class="tab-btn food-tab active" onclick="switchTab('food')">🍱 맛집 리스트</button>
-            <button class="tab-btn coffee-tab" onclick="switchTab('coffee')">☕ 커피숍 리스트</button>
+            <button class="tab-btn food-tab active" onclick="switchTab('food')">🍱 맛집</button>
+            <button class="tab-btn coffee-tab" onclick="switchTab('coffee')">☕ 카페</button>
         </div>
 
-        <!-- Food Section -->
-        <div id="food-section" class="list-section active">
-            <h1 style="color: var(--food-primary);">🍱 화곡동 맛집 리스트</h1>
-            <p class="intro-text">화곡역 주변 검증된 맛집 TOP 3와 수강생 추천 리스트입니다.</p>
-            
-            <div class="top-section">
-                <h2 class="top-title">👑 오늘의 TOP 3 <span class="top-badge">Verified</span></h2>
-                <div id="top-food-list" class="list-grid"></div>
+        <h1 id="main-title">🍱 우리동네 맛집 제보</h1>
+        
+        <section class="add-section">
+            <div class="form-grid">
+                <input type="text" id="new-name" placeholder="상호명">
+                <input type="text" id="new-desc" placeholder="추천 이유 또는 한줄평">
+                <button class="add-btn" onclick="addItem()">제보하기</button>
             </div>
+        </section>
 
-            <h2 style="font-family: 'Jua'; margin-top: 50px;">모든 맛집 보기</h2>
-            <section class="add-section">
-                <div class="form-grid">
-                    <input type="text" id="new-food-name" placeholder="식당 이름">
-                    <input type="text" id="new-food-desc" placeholder="추천 이유">
-                    <button class="add-btn" onclick="addNewItem('food')">추가하기</button>
-                </div>
-            </section>
-            <div id="food-list" class="list-grid"></div>
-        </div>
-
-        <!-- Coffee Section -->
-        <div id="coffee-section" class="list-section">
-            <h1 style="color: var(--coffee-primary);">☕ 화곡동 카페 리스트</h1>
-            <p class="intro-text">화곡역 주변 인기 카페 TOP 3와 수강생 추천 리스트입니다.</p>
-            
-            <div class="top-section">
-                <h2 class="top-title">🏆 오늘의 카페 TOP 3 <span class="top-badge">Popular</span></h2>
-                <div id="top-coffee-list" class="list-grid"></div>
-            </div>
-
-            <h2 style="font-family: 'Jua'; margin-top: 50px;">모든 카페 보기</h2>
-            <section class="add-section">
-                <div class="form-grid">
-                    <input type="text" id="new-coffee-name" placeholder="카페 이름">
-                    <input type="text" id="new-coffee-desc" placeholder="추천 이유">
-                    <button class="add-btn" onclick="addNewItem('coffee')">추가하기</button>
-                </div>
-            </section>
-            <div id="coffee-list" class="list-grid"></div>
+        <div id="item-list" class="list-grid">
+            <p style="text-align:center; grid-column: 1/-1;">데이터를 불러오는 중...</p>
         </div>
     </div>
 
-    <!-- Review Modal -->
-    <div id="review-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">&times;</button>
-            <h2 id="modal-name" style="font-family: 'Jua'; margin: 0;"></h2>
-            <div id="modal-reviews" class="review-list"></div>
-            <div class="review-input-group">
-                <input type="text" id="review-text" class="review-input" placeholder="후기를 남겨주세요!">
-                <button class="add-btn" id="modal-add-btn" style="padding: 10px 20px;" onclick="addReview()">등록</button>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
-        const data = {
-            food: {
-                top: [
-                    { id: 'f1', name: "화곡영양족발", zone: "화곡본동시장", desc: "서울 3대 족발! 쫀득한 식감과 푸짐한 순대국 서비스가 일품.", rank: 1 },
-                    { id: 'f21', name: "동래정 화곡점", zone: "화곡역", desc: "직접 구워주는 육즙 가득 가브리살 전문점. 멜조림 볶음밥 필수!", rank: 2 },
-                    { id: 'f22', name: "신고집해물찜", zone: "화곡역", desc: "푸짐한 해산물과 중독성 있는 매콤한 양념의 조화.", rank: 3 }
-                ],
-                defaults: [
-                    { id: 'f2', name: "전주뼈해장국", zone: "강서구청", desc: "고기가 산더미처럼 쌓여 나오는 찐 해장 맛집." },
-                    { id: 'f3', name: "오남매닭갈비", zone: "화곡역", desc: "철판에서 볶아지는 매콤한 맛! 볶음밥 필수." },
-                    { id: 'f14', name: "백소정 화곡역점", zone: "화곡역", desc: "두툼한 돈카츠와 마제소바 전문점." },
-                    { id: 'f15', name: "스시현", zone: "화곡역", desc: "합리적인 가격에 즐기는 신선한 초밥 세트." }
-                ],
-                storageKey: 'foodStateV4'
-            },
-            coffee: {
-                top: [
-                    { id: 'c21', name: "체르보 (Cervo)", zone: "화곡역", desc: "화곡역 근처에서 가장 넓고 쾌적한 카페. 깔끔한 인테리어와 조용한 분위기로 강추!", rank: 1 },
-                    { id: 'c22', name: "이층창가", zone: "화곡역", desc: "채광 좋은 감성 카페. 직접 만드는 수제 디저트와 마카롱이 정말 맛있어요.", rank: 2 },
-                    { id: 'c23', name: "일도커피", zone: "화곡동", desc: "감각적인 인테리어와 고소한 라떼가 일품인 핫한 신상 카페.", rank: 3 }
-                ],
-                defaults: [
-                    { id: 'c1', name: "투썸플레이스 화곡역점", zone: "화곡역", desc: "공부하기 좋은 넓은 좌석과 맛있는 케이크." },
-                    { id: 'c2', name: "스타벅스 화곡역점", zone: "화곡역", desc: "믿고 가는 스벅, 공부 집중도가 높습니다." },
-                    { id: 'c5', name: "메가커피 화곡역점", zone: "화곡역", desc: "가성비 갑! 등원 길에 빠르게 픽업하기 좋음." }
-                ],
-                storageKey: 'cafeStateV4'
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa_R4StCH81IxkmbPcxxiLiawJMwFxS1M",
+            authDomain: "stec-chat.firebaseapp.com",
+            databaseURL: "https://stec-chat-default-rtdb.firebaseio.com",
+            projectId: "stec-chat"
         };
-
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
         let currentType = 'food';
-        let currentActiveId = null;
 
         function switchTab(type) {
             currentType = type;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.list-section').forEach(sec => sec.classList.remove('active'));
             document.body.className = `${type}-theme`;
-            
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelector(`.${type}-tab`).classList.add('active');
-            document.getElementById(`${type}-section`).classList.add('active');
-            
-            renderAll();
+            document.getElementById('main-title').innerText = type === 'food' ? '🍱 우리동네 맛집 제보' : '☕ 우리동네 카페 제보';
+            loadData();
         }
 
-        function renderAll() {
-            const type = currentType;
-            const state = JSON.parse(localStorage.getItem(data[type].storageKey)) || { userAdded: [], reviews: {} };
-            
-            const topListEl = document.getElementById(`top-${type}-list`);
-            const listEl = document.getElementById(`${type}-list`);
-            
-            topListEl.innerHTML = '';
-            listEl.innerHTML = '';
+        function addItem() {
+            const name = document.getElementById('new-name').value.trim();
+            const desc = document.getElementById('new-desc').value.trim();
+            if(!name || !desc) return alert('상호명과 추천 이유를 적어주세요!');
 
-            data[type].top.forEach(item => topListEl.appendChild(createCard(item, true, type)));
-            [...data[type].defaults, ...state.userAdded].forEach(item => listEl.appendChild(createCard(item, false, type)));
-        }
-
-        function createCard(item, isTop, type) {
-            const card = document.createElement('div');
-            card.className = `res-card ${isTop ? 'top-rank' : ''} ${String(item.id).startsWith('u') ? 'user-added' : ''}`;
-            let rankTag = isTop ? `<div class="rank-tag">TOP ${item.rank}</div>` : '';
-            
-            card.innerHTML = `
-                ${rankTag}
-                <div>
-                    <span class="zone">${item.zone || '학생 제보'}</span>
-                    <a href="https://search.naver.com/search.naver?query=화곡동+${type === 'coffee' ? '카페+' : ''}${item.name}" target="_blank" class="res-link">
-                        <h3>${item.name}</h3>
-                    </a>
-                    <p>${item.desc}</p>
-                </div>
-                <div class="action-area">
-                    <button class="review-btn" onclick="openReviewModal('${item.id}', '${item.name}')">💬 후기 보기 및 작성</button>
-                </div>`;
-            return card;
-        }
-
-        function addNewItem(type) {
-            const name = document.getElementById(`new-${type}-name`).value;
-            const desc = document.getElementById(`new-${type}-desc`).value;
-            if (!name || !desc) return alert('내용 입력!');
-            
-            const state = JSON.parse(localStorage.getItem(data[type].storageKey)) || { userAdded: [], reviews: {} };
-            state.userAdded.push({ id: 'u' + Date.now(), name, desc, zone: '학생 제보' });
-            localStorage.setItem(data[type].storageKey, JSON.stringify(state));
-            
-            renderAll();
-            document.getElementById(`new-${type}-name`).value = '';
-            document.getElementById(`new-${type}-desc`).value = '';
-        }
-
-        function openReviewModal(id, name) {
-            currentActiveId = id;
-            document.getElementById('modal-name').innerText = name;
-            document.getElementById('modal-name').style.color = currentType === 'food' ? 'var(--food-primary)' : 'var(--coffee-primary)';
-            document.getElementById('modal-add-btn').style.background = currentType === 'food' ? 'var(--food-primary)' : 'var(--coffee-primary)';
-            renderReviews();
-            document.getElementById('review-modal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('review-modal').style.display = 'none'; }
-
-        function renderReviews() {
-            const type = currentType;
-            const state = JSON.parse(localStorage.getItem(data[type].storageKey)) || { userAdded: [], reviews: {} };
-            const list = document.getElementById('modal-reviews');
-            list.innerHTML = '';
-            (state.reviews[currentActiveId] || []).forEach(rev => {
-                const div = document.createElement('div');
-                div.className = 'review-item';
-                div.innerText = rev;
-                list.appendChild(div);
+            database.ref(currentType).push({
+                name, desc,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
             });
-            if(list.innerHTML === '') list.innerHTML = '<p style="color:#ccc; text-align:center;">첫 후기를 남겨보세요!</p>';
+
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-desc').value = '';
         }
 
-        function addReview() {
-            const text = document.getElementById('review-text').value;
-            if (!text) return;
-            const type = currentType;
-            const state = JSON.parse(localStorage.getItem(data[type].storageKey)) || { userAdded: [], reviews: {} };
-            if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
-            state.reviews[currentActiveId].push(text);
-            localStorage.setItem(data[type].storageKey, JSON.stringify(state));
-            renderReviews();
-            document.getElementById('review-text').value = '';
+        function loadData() {
+            const listEl = document.getElementById('item-list');
+            database.ref(currentType).on('value', (snapshot) => {
+                listEl.innerHTML = '';
+                const data = snapshot.val();
+                if(!data) {
+                    listEl.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">아직 등록된 정보가 없습니다. 첫 제보자가 되어보세요!</p>';
+                    return;
+                }
+                Object.values(data).reverse().forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'res-card';
+                    card.innerHTML = `
+                        <span class="zone">학생 제보</span>
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <a href="https://search.naver.com/search.naver?query=화곡역+${item.name}" target="_blank" style="font-size:0.8rem; color:var(--stec-blue);">네이버 검색 ↗</a>
+                    `;
+                    listEl.appendChild(card);
+                });
+            });
         }
 
-        window.onclick = (e) => { if(e.target == document.getElementById('review-modal')) closeModal(); };
-        renderAll();
+        loadData();
     </script>
 </body>
 </html>

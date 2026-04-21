@@ -44,37 +44,62 @@
             flex-direction: column;
             gap: 15px;
             position: relative;
+            background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60%;
+            background-attachment: local;
+        }
+
+        /* 배경 이미지 투명도 조절을 위한 가상 요소 */
+        #chat-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(186, 206, 224, 0.85); /* 기존 배경색과 합성 */
+            z-index: 0;
+            pointer-events: none;
         }
 
         .message {
-            max-width: 80%;
+            max-width: 85%;
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* 말풍선이 글자 길이에 맞게 줄어들도록 설정 */
-        }
-
-        .message.mine {
-            align-self: flex-end;
-            align-items: flex-end;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
         }
 
         .user-name {
-            font-size: 0.8rem;
+            font-size: 1rem; /* 이름 크기 키움 */
             margin-bottom: 5px;
-            color: #444;
-            font-weight: 600;
+            color: #222;
+            font-weight: 800;
         }
 
         .bubble {
-            padding: 10px 15px;
-            border-radius: 15px;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            padding: 12px 18px; /* 패딩 키움 */
+            border-radius: 18px;
+            font-size: 1.1rem; /* 채팅 글자 크기 키움 */
+            line-height: 1.5;
             position: relative;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             background: white;
-            display: inline-block; /* 텍스트 길이에 맞춤 */
-            word-break: break-all; /* 긴 영문/숫자 줄바꿈 */
+            display: inline-block;
+            word-break: break-all;
+        }
+
+        .time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 480px) {
+            .bubble { font-size: 1rem; padding: 10px 15px; }
+            .user-name { font-size: 0.9rem; }
+            #chat-container { background-size: 80%; }
         }
 
         .message.mine .bubble {
