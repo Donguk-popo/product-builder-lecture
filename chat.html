@@ -154,7 +154,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
-        // Firebase 설정 (실제 프로젝트 ID로 연결되도록 구성)
+        // Firebase 설정
         const firebaseConfig = {
             databaseURL: "https://stec-chat-default-rtdb.firebaseio.com" 
         };
@@ -176,30 +176,56 @@
         const nameInput = document.getElementById('name-input');
         const messageInput = document.getElementById('message-input');
 
-        let myId = localStorage.getItem('stec_chat_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('stec_chat_user_id', myId);
+        // 내 고유 ID 고정
+        let myId = localStorage.getItem('stec_chat_user_id');
+        if (!myId) {
+            myId = 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('stec_chat_user_id', myId);
+        }
 
-        // 개별 메시지 렌더링 함수
-        function appendMessage(msg, isMine) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
-            msgDiv.innerHTML = `
-                <div class="user-name">${msg.name}</div>
-                <div class="bubble">${msg.content}</div>
-                <div class="time">${msg.time}</div>
-            `;
-            chatContainer.appendChild(msgDiv);
+        // 메시지 렌더링 함수
+        function renderAllMessages(data) {
+            chatContainer.innerHTML = '';
+            
+            if (!data) {
+                appendSystemMessage("채팅방에 연결되었습니다. 첫 메시지를 남겨보세요!");
+                return;
+            }
+
+            // Firebase 데이터를 배열로 변환하여 시간순 정렬
+            const messages = Object.values(data);
+            
+            messages.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                const isMine = msg.senderId === myId;
+                msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
+                
+                msgDiv.innerHTML = `
+                    <div class="user-name">${msg.name}</div>
+                    <div class="bubble">${msg.content}</div>
+                    <div class="time">${msg.time}</div>
+                `;
+                chatContainer.appendChild(msgDiv);
+            });
+            
+            // 화면 하단으로 스크롤
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        // 실시간 데이터 수신 (새로운 데이터가 추가될 때마다 실행)
+        function appendSystemMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message other';
+            msgDiv.style.alignSelf = 'center';
+            msgDiv.style.opacity = '0.7';
+            msgDiv.innerHTML = `<div class="bubble" style="background:#eee; border-radius:10px; font-size:0.8rem;">${text}</div>`;
+            chatContainer.appendChild(msgDiv);
+        }
+
+        // [핵심] 모든 메시지를 실시간으로 감시하고 갱신
         if (chatRef) {
-            chatRef.limitToLast(50).on('child_added', (snapshot) => {
-                const msg = snapshot.val();
-                // 내가 보낸 메시지는 이미 화면에 있으므로, 남이 보낸 것만 추가 렌더링
-                if (msg.senderId !== myId) {
-                    appendMessage(msg, false);
-                }
+            chatRef.limitToLast(50).on('value', (snapshot) => {
+                const data = snapshot.val();
+                renderAllMessages(data);
             });
         }
 
@@ -220,29 +246,15 @@
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             };
 
-            // 1. 화면에 즉시 표시 (네트워크 지연 상관없이)
-            appendMessage(newMsg, true);
-            
-            // 2. Firebase 전송
+            // Firebase에 저장만 하면 on('value')가 감지해서 화면을 그려줍니다.
             if (chatRef) {
                 chatRef.push(newMsg).catch(err => {
-                    console.error("전송 실패 (서버 연결 확인 필요):", err);
+                    alert("메시지 전송에 실패했습니다. 인터넷 연결을 확인해주세요.");
                 });
             }
 
             messageInput.value = '';
         }
-
-        // 초기 안내 메시지
-        setTimeout(() => {
-            if (chatContainer.children.length === 0) {
-                appendMessage({
-                    name: "시스템",
-                    content: "채팅방에 연결되었습니다. 자유롭게 대화하세요!",
-                    time: "방금"
-                }, false);
-            }
-        }, 1000);
     </script>
 </body>
 </html>
