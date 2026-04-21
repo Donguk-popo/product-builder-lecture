@@ -164,9 +164,16 @@
             const chatContainer = document.getElementById('chat-container');
             const loader = document.getElementById('loader');
             
-            // Firebase 설정 (Public Read/Write가 허용된 DB여야 함)
+            // Firebase 상세 설정 반영
             const firebaseConfig = {
-                databaseURL: "https://stec-chat-default-rtdb.firebaseio.com" 
+                apiKey: "AIzaSyCa_R4StCH81IxkmbPcxxiLiawJMwFxS1M",
+                authDomain: "stec-chat.firebaseapp.com",
+                databaseURL: "https://stec-chat-default-rtdb.firebaseio.com",
+                projectId: "stec-chat",
+                storageBucket: "stec-chat.firebasestorage.app",
+                messagingSenderId: "655655599194",
+                appId: "1:655655599194:web:3906470c84ffa692512c63",
+                measurementId: "G-1RT2E5GNHZ"
             };
 
             let chatRef;
