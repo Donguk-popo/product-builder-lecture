@@ -44,19 +44,19 @@
             flex-direction: column;
             gap: 15px;
             position: relative;
+            /* 피카츄 배경 고정 */
             background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png');
             background-repeat: no-repeat;
             background-position: center;
-            background-size: 60%;
-            background-attachment: local;
+            background-size: 50%;
+            background-attachment: fixed;
         }
 
-        /* 배경 이미지 투명도 조절을 위한 가상 요소 */
         #chat-container::before {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(186, 206, 224, 0.85); /* 기존 배경색과 합성 */
+            background: rgba(186, 206, 224, 0.8);
             z-index: 0;
             pointer-events: none;
         }
@@ -70,36 +70,28 @@
             z-index: 1;
         }
 
+        .message.mine {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
         .user-name {
-            font-size: 1rem; /* 이름 크기 키움 */
+            font-size: 1.1rem;
             margin-bottom: 5px;
-            color: #222;
+            color: #111;
             font-weight: 800;
         }
 
         .bubble {
-            padding: 12px 18px; /* 패딩 키움 */
+            padding: 12px 18px;
             border-radius: 18px;
-            font-size: 1.1rem; /* 채팅 글자 크기 키움 */
+            font-size: 1.2rem;
             line-height: 1.5;
             position: relative;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             background: white;
             display: inline-block;
             word-break: break-all;
-        }
-
-        .time {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        /* 모바일 대응 */
-        @media (max-width: 480px) {
-            .bubble { font-size: 1rem; padding: 10px 15px; }
-            .user-name { font-size: 0.9rem; }
-            #chat-container { background-size: 80%; }
         }
 
         .message.mine .bubble {
@@ -112,8 +104,8 @@
         }
 
         .time {
-            font-size: 0.7rem;
-            color: #777;
+            font-size: 0.8rem;
+            color: #555;
             margin-top: 5px;
         }
 
@@ -127,28 +119,27 @@
 
         #message-input {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
             outline: none;
         }
 
         #send-btn {
             background-color: var(--kakao-yellow);
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 10px;
             font-weight: 800;
             cursor: pointer;
             color: var(--kakao-brown);
         }
 
-        /* 이름 입력 모달 */
         #name-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -157,31 +148,32 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 320px;
+            padding: 40px;
+            border-radius: 25px;
+            width: 85%;
+            max-width: 350px;
             text-align: center;
         }
 
-        .modal-content h2 { margin-top: 0; font-size: 1.2rem; }
         .modal-content input {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin: 20px 0;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 12px;
             box-sizing: border-box;
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-align: center;
         }
+
         .modal-content button {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             background: var(--kakao-yellow);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 800;
+            font-size: 1.1rem;
             cursor: pointer;
         }
 
@@ -190,10 +182,9 @@
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             color: #777;
-            background: rgba(255,255,255,0.8);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: rgba(255,255,255,0.9);
+            padding: 15px 30px;
+            border-radius: 30px;
         }
     </style>
 </head>
@@ -201,7 +192,7 @@
 
     <header>
         <a href="index.html" class="back-btn">←</a>
-        <div class="title">💬 수다 talk <span id="connection-status" style="font-size: 0.6rem; vertical-align: middle; margin-left: 5px; padding: 2px 6px; border-radius: 10px; background: #eee; color: #777;">연결 확인 중...</span></div>
+        <div class="title">💬 수다 talk <span id="connection-status" style="font-size: 0.7rem; vertical-align: middle; margin-left: 5px; padding: 3px 8px; border-radius: 10px; background: #eee;">연결 중...</span></div>
         <div style="width: 20px;"></div>
     </header>
 
@@ -214,17 +205,15 @@
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
-    <!-- 이름 입력 모달 -->
     <div id="name-modal">
         <div class="modal-content">
-            <h2>대화명 설정</h2>
-            <p>채팅방에서 사용할 이름을 적어주세요.</p>
-            <input type="text" id="modal-name-input" placeholder="이름을 입력하세요" maxlength="10">
-            <button onclick="setUserName()">입장하기</button>
+            <h2 style="font-size: 1.5rem;">대화명 설정</h2>
+            <p>사용할 이름을 입력해주세요.</p>
+            <input type="text" id="modal-name-input" placeholder="이름 입력 (10자 이내)" maxlength="10">
+            <button onclick="setUserName()">채팅 시작하기</button>
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -250,14 +239,13 @@
             const myId = localStorage.getItem('stec_chat_user_id') || 'user_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('stec_chat_user_id', myId);
 
-            // 유저 ID 기반 고유 파스텔톤 컬러 생성 함수
             function getUserColor(userId) {
                 let hash = 0;
                 for (let i = 0; i < userId.length; i++) {
                     hash = userId.charCodeAt(i) + ((hash << 5) - hash);
                 }
                 const h = Math.abs(hash % 360);
-                return `hsl(${h}, 70%, 90%)`; // 부드러운 파스텔톤
+                return `hsl(${h}, 70%, 90%)`;
             }
 
             function appendMessage(msg, type = 'normal') {
@@ -268,7 +256,7 @@
                 if (type === 'system') {
                     msgDiv.className = 'message other';
                     msgDiv.style.alignSelf = 'center';
-                    msgDiv.innerHTML = `<div class="bubble" style="background:#eee; font-size:0.8rem;">${msg.content}</div>`;
+                    msgDiv.innerHTML = `<div class="bubble" style="background:#eee; font-size:0.9rem;">${msg.content}</div>`;
                 } else {
                     msgDiv.className = `message ${isMine ? 'mine' : 'other'}`;
                     const bubbleColor = isMine ? 'var(--my-bubble)' : getUserColor(msg.senderId);
@@ -289,13 +277,22 @@
                     const database = firebase.database();
                     chatRef = database.ref('messages');
 
-                    chatRef.limitToLast(50).on('value', (snapshot) => {
-                        chatContainer.innerHTML = '';
+                    // 데이터 개수 제한 로직 (100개 유지)
+                    chatRef.on('value', (snapshot) => {
                         const data = snapshot.val();
+                        chatContainer.innerHTML = '';
                         if (!data) {
-                            appendMessage({ content: '대화 기록이 없습니다. 먼저 말을 걸어보세요!' }, 'system');
+                            appendMessage({ content: '새로운 대화가 없습니다. 인사를 나눠보세요!' }, 'system');
                         } else {
-                            Object.values(data).forEach(msg => appendMessage(msg));
+                            const entries = Object.entries(data);
+                            // 100개 초과 시 오래된 것 삭제
+                            if (entries.length > 100) {
+                                const excess = entries.length - 100;
+                                for (let i = 0; i < excess; i++) {
+                                    chatRef.child(entries[i][0]).remove();
+                                }
+                            }
+                            entries.forEach(entry => appendMessage(entry[1]));
                         }
                     });
 
@@ -312,12 +309,10 @@
                 } catch (e) { console.error(e); }
             }
 
-            // 이름 설정 함수
             window.setUserName = function() {
                 const nameInput = document.getElementById('modal-name-input');
                 const name = nameInput.value.trim();
-                if (!name) { alert('이름을 입력해주세요!'); return; }
-                
+                if (!name) return alert('이름을 입력해주세요!');
                 currentUserName = name;
                 localStorage.setItem('stec_user_name', name);
                 nameModal.style.display = 'none';
@@ -339,7 +334,6 @@
                 messageInput.value = '';
             };
 
-            // 초기 실행 로직
             if (currentUserName) nameModal.style.display = 'none';
             
             const checkFirebase = setInterval(() => {
