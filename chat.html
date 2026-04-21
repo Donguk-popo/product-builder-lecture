@@ -71,7 +71,9 @@
             line-height: 1.4;
             position: relative;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            background: white; /* Default */
+            background: white;
+            display: inline-block; /* 텍스트 길이에 맞춤 */
+            word-break: break-all; /* 긴 영문/숫자 줄바꿈 */
         }
 
         .message.mine .bubble {
