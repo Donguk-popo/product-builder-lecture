@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노래 추천 | STEC 반도체 장비 2기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --music-primary: #1db954; /* Spotify style green */
+            --music-dark: #121212;
+            --music-card: #181818;
+            --stec-blue: #004a99;
+            --white: #ffffff;
+            --text-gray: #b3b3b3;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            background: var(--music-dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 5%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 1px solid #333;
+            background: transparent;
+            color: var(--white);
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Jua';
+        }
+
+        .tab-btn.active {
+            background: var(--music-primary);
+            border-color: var(--music-primary);
+            transform: scale(1.05);
+        }
+
+        /* Mobile Player UI */
+        .player-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(180deg, #282828 0%, #121212 100%);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-art {
+            width: 250px;
+            height: 250px;
+            background: #333;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            transition: transform 0.3s;
+        }
+        
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .song-info h2 {
+            font-size: 2rem;
+            margin: 0;
+            font-family: 'Jua';
+        }
+
+        .song-info p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin: 5px 0 0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .control-btn:hover {
+            color: var(--music-primary);
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            width: 70px;
+            height: 70px;
+            background: var(--white);
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .play-pause-btn:hover {
+            transform: scale(1.05);
+            background: var(--music-primary);
+            color: white;
+        }
+
+        /* Recommendation List */
+        .section-title {
+            font-family: 'Jua';
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-section {
+            background: var(--music-card);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+        }
+
+        .form-grid input {
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #282828;
+            color: white;
+        }
+
+        .add-btn {
+            background: var(--music-primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .music-card {
+            background: var(--music-card);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: background 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .music-card:hover {
+            background: #282828;
+            border-color: #444;
+        }
+        
+        .music-card.playing {
+            border-color: var(--music-primary);
+        }
+
+        .mini-art {
+            width: 60px;
+            height: 60px;
+            background: #333;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .card-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-family: 'Jua';
+        }
+
+        .card-info p {
+            margin: 2px 0 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .album-art {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo" style="font-weight:800; font-size:1.5rem;">STEC <span>MUSIC</span></div>
+        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
+    </nav>
+
+    <div class="container">
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('kpop')">🇰🇷 국내</button>
+            <button class="tab-btn" onclick="switchTab('jpop')">🇯🇵 JPOP</button>
+            <button class="tab-btn" onclick="switchTab('pop')">🇺🇸 팝송</button>
+        </div>
+
+        <!-- Mobile Style Player -->
+        <div class="player-section">
+            <div class="album-art" id="player-art">🎵</div>
+            <div class="song-info">
+                <h2 id="player-title">노래를 선택해주세요</h2>
+                <p id="player-artist">Artist</p>
+            </div>
+            <div class="player-controls">
+                <button class="control-btn" onclick="prevSong()">⏮</button>
+                <button class="control-btn play-pause-btn" onclick="togglePlay()" id="play-btn">▶</button>
+                <button class="control-btn" onclick="nextSong()">⏭</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">✍️ 노래 추천하기</h2>
+        <section class="add-section">
+            <div class="form-grid">
+                <input type="text" id="new-title" placeholder="곡 제목">
+                <input type="text" id="new-artist" placeholder="가수명">
+                <input type="text" id="new-recommender" placeholder="추천인">
+                <button class="add-btn" onclick="addItem()">추천하기</button>
+            </div>
+        </section>
+
+        <h2 class="section-title">📋 플레이리스트</h2>
+        <div id="music-list" class="list-grid">
+            <!-- Items will be loaded here -->
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa_R4StCH81IxkmbPcxxiLiawJMwFxS1M",
+            authDomain: "stec-chat.firebaseapp.com",
+            databaseURL: "https://stec-chat-default-rtdb.firebaseio.com",
+            projectId: "stec-chat"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        const defaults = {
+            kpop: [
+                { title: "밤양갱", artist: "비비(BIBI)", recommender: "관리자" },
+                { title: "Love wins all", artist: "아이유(IU)", recommender: "관리자" },
+                { title: "EASY", artist: "LE SSERAFIM", recommender: "관리자" }
+            ],
+            jpop: [
+                { title: "Idol", artist: "YOASOBI", recommender: "관리자" },
+                { title: "Bling-Bang-Bang-Born", artist: "Creepy Nuts", recommender: "관리자" },
+                { title: "Lemon", artist: "Kenshi Yonezu", recommender: "관리자" }
+            ],
+            pop: [
+                { title: "Cruel Summer", artist: "Taylor Swift", recommender: "관리자" },
+                { title: "vampire", artist: "Olivia Rodrigo", recommender: "관리자" },
+                { title: "Stay", artist: "The Kid LAROI & Justin Bieber", recommender: "관리자" }
+            ]
+        };
+
+        let currentType = 'kpop';
+        let currentPlaylist = [];
+        let currentIndex = -1;
+        let isPlaying = false;
+
+        function switchTab(type) {
+            currentType = type;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(type));
+            });
+            loadData();
+        }
+
+        function addItem() {
+            const title = document.getElementById('new-title').value.trim();
+            const artist = document.getElementById('new-artist').value.trim();
+            const recommender = document.getElementById('new-recommender').value.trim() || '익명';
+            
+            if(!title || !artist) return alert('제목과 가수를 입력해주세요!');
+
+            database.ref(`music_${currentType}`).push({
+                title, artist, recommender,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            document.getElementById('new-title').value = '';
+            document.getElementById('new-artist').value = '';
+            document.getElementById('new-recommender').value = '';
+        }
+
+        function loadData() {
+            const listEl = document.getElementById('music-list');
+            listEl.innerHTML = '';
+            
+            // Combine defaults and firebase data
+            currentPlaylist = [...defaults[currentType]];
+            
+            database.ref(`music_${currentType}`).on('value', (snapshot) => {
+                const data = snapshot.val();
+                let firebaseItems = [];
+                if(data) {
+                    firebaseItems = Object.values(data).reverse();
+                }
+                
+                const fullList = [...defaults[currentType], ...firebaseItems];
+                currentPlaylist = fullList;
+                renderList(fullList);
+            });
+        }
+
+        function renderList(list) {
+            const listEl = document.getElementById('music-list');
+            listEl.innerHTML = '';
+            list.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `music-card ${currentIndex === index ? 'playing' : ''}`;
+                card.onclick = () => selectSong(index);
+                card.innerHTML = `
+                    <div class="mini-art">🎵</div>
+                    <div class="card-info">
+                        <h3>${item.title}</h3>
+                        <p>${item.artist} · ${item.recommender} 추천</p>
+                    </div>
+                `;
+                listEl.appendChild(card);
+            });
+        }
+
+        function selectSong(index) {
+            currentIndex = index;
+            const song = currentPlaylist[index];
+            document.getElementById('player-title').innerText = song.title;
+            document.getElementById('player-artist').innerText = song.artist;
+            document.getElementById('player-art').innerText = '🎵'; // Placeholder for art
+            
+            isPlaying = true;
+            document.getElementById('play-btn').innerText = '⏸';
+            
+            // Highlight in list
+            renderList(currentPlaylist);
+        }
+
+        function togglePlay() {
+            if(currentIndex === -1) {
+                if(currentPlaylist.length > 0) selectSong(0);
+                return;
+            }
+            isPlaying = !isPlaying;
+            document.getElementById('play-btn').innerText = isPlaying ? '⏸' : '▶';
+        }
+
+        function nextSong() {
+            if(currentPlaylist.length === 0) return;
+            let nextIndex = currentIndex + 1;
+            if(nextIndex >= currentPlaylist.length) nextIndex = 0;
+            selectSong(nextIndex);
+        }
+
+        function prevSong() {
+            if(currentPlaylist.length === 0) return;
+            let prevIndex = currentIndex - 1;
+            if(prevIndex < 0) prevIndex = currentPlaylist.length - 1;
+            selectSong(prevIndex);
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
