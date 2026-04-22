@@ -7,33 +7,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --music-primary: #1db954; /* Spotify style green */
-            --music-dark: #121212;
-            --music-card: #181818;
-            --stec-blue: #004a99;
+            --music-primary: #ff4757;
+            --music-accent: #00d2ff;
+            --music-dark: #0f0f13;
+            --card-bg: rgba(255, 255, 255, 0.05);
             --white: #ffffff;
-            --text-gray: #b3b3b3;
+            --text-gray: #a0a0a0;
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
             margin: 0;
-            background: var(--music-dark);
+            background-color: var(--music-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
             color: var(--white);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
         nav {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(15, 15, 19, 0.8);
             padding: 15px 5%;
-            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .container {
@@ -42,164 +47,87 @@
             padding: 0 20px;
         }
 
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header-section h1 {
+            font-family: 'Jua';
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .tab-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 40px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px;
+            border-radius: 50px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .tab-btn {
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 1px solid #333;
+            padding: 10px 25px;
+            border-radius: 40px;
+            border: none;
             background: transparent;
-            color: var(--white);
-            font-weight: 800;
-            font-size: 1.1rem;
+            color: var(--text-gray);
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Jua';
         }
 
         .tab-btn.active {
-            background: var(--music-primary);
-            border-color: var(--music-primary);
-            transform: scale(1.05);
-        }
-
-        /* Mobile Player UI */
-        .player-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: linear-gradient(180deg, #282828 0%, #121212 100%);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            margin-bottom: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .album-art {
-            width: 250px;
-            height: 250px;
-            background: #333;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 5rem;
-            transition: transform 0.3s;
-        }
-        
-        .album-art img {
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            object-fit: cover;
-        }
-
-        .song-info {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .song-info h2 {
-            font-size: 2rem;
-            margin: 0;
-            font-family: 'Jua';
-        }
-
-        .song-info p {
-            color: var(--text-gray);
-            font-size: 1.2rem;
-            margin: 5px 0 0;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .control-btn {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-
-        .control-btn:hover {
-            color: var(--music-primary);
-            transform: scale(1.1);
-        }
-
-        .play-pause-btn {
-            width: 70px;
-            height: 70px;
             background: var(--white);
-            color: black;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-        }
-
-        .play-pause-btn:hover {
-            transform: scale(1.05);
-            background: var(--music-primary);
-            color: white;
-        }
-
-        /* Recommendation List */
-        .section-title {
-            font-family: 'Jua';
-            font-size: 1.8rem;
-            margin: 40px 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--music-dark);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
         }
 
         .add-section {
-            background: var(--music-card);
-            padding: 30px;
+            background: var(--card-bg);
+            padding: 25px;
             border-radius: 20px;
             margin-bottom: 40px;
-            border: 1px solid #333;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 10px;
+            gap: 12px;
         }
 
         .form-grid input {
-            padding: 12px;
-            border: 1px solid #333;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: #282828;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
             color: white;
+            outline: none;
         }
 
+        .form-grid input:focus { border-color: var(--music-accent); }
+
         .add-btn {
-            background: var(--music-primary);
-            color: white;
+            background: var(--white);
+            color: var(--music-dark);
             border: none;
             padding: 12px 25px;
-            border-radius: 10px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 800;
             cursor: pointer;
+            transition: 0.3s;
         }
+        .add-btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
         .list-grid {
             display: grid;
@@ -208,88 +136,94 @@
         }
 
         .music-card {
-            background: var(--music-card);
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 20px;
             padding: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            transition: background 0.3s;
+            gap: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            border: 1px solid transparent;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03));
+            pointer-events: none;
         }
 
         .music-card:hover {
-            background: #282828;
-            border-color: #444;
-        }
-        
-        .music-card.playing {
-            border-color: var(--music-primary);
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        .mini-art {
-            width: 60px;
-            height: 60px;
-            background: #333;
-            border-radius: 8px;
+        .music-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--music-primary), var(--music-accent));
+            border-radius: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .card-info h3 {
-            margin: 0;
-            font-size: 1.1rem;
-            font-family: 'Jua';
+        .card-info { flex-grow: 1; }
+        .card-info h3 { margin: 0; font-size: 1.15rem; font-family: 'Jua'; letter-spacing: 0.5px; }
+        .card-info p { margin: 4px 0 0; color: var(--text-gray); font-size: 0.9rem; }
+        
+        .play-indicator {
+            font-size: 0.8rem;
+            color: var(--music-accent);
+            opacity: 0;
+            transition: 0.3s;
         }
-
-        .card-info p {
-            margin: 2px 0 0;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
+        .music-card:hover .play-indicator { opacity: 1; }
 
         @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .album-art {
-                width: 200px;
-                height: 200px;
-            }
+            .form-grid { grid-template-columns: 1fr; }
+            .header-section h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo" style="font-weight:800; font-size:1.5rem;">STEC <span>MUSIC</span></div>
-        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a>
+        <div class="logo" style="font-weight:800; font-size:1.5rem; font-family:'Jua';">STEC <span>MUSIC</span></div>
+        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold; font-size:0.9rem; opacity:0.8;">홈으로</a>
     </nav>
 
     <div class="container">
+        <div class="header-section">
+            <h1>오늘의 추천 플레이리스트</h1>
+            <p style="color:var(--text-gray); margin-top:10px;">노래를 클릭하면 바로 감상할 수 있습니다.</p>
+        </div>
+
         <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab('kpop')">🇰🇷 국내</button>
-            <button class="tab-btn" onclick="switchTab('jpop')">🇯🇵 JPOP</button>
-            <button class="tab-btn" onclick="switchTab('pop')">🇺🇸 팝송</button>
+            <button class="tab-btn active" onclick="switchTab('kpop')">국내 최신곡</button>
+            <button class="tab-btn" onclick="switchTab('jpop')">인기 JPOP</button>
+            <button class="tab-btn" onclick="switchTab('pop')">글로벌 팝송</button>
         </div>
 
-        <!-- Mobile Style Player -->
-        <div class="player-section">
-            <div class="album-art" id="player-art">🎵</div>
-            <div class="song-info">
-                <h2 id="player-title">노래를 선택해주세요</h2>
-                <p id="player-artist">Artist</p>
-            </div>
-            <div class="player-controls">
-                <button class="control-btn" onclick="prevSong()">⏮</button>
-                <button class="control-btn play-pause-btn" onclick="togglePlay()" id="play-btn">▶</button>
-                <button class="control-btn" onclick="nextSong()">⏭</button>
-            </div>
+        <h2 style="font-family:'Jua'; margin-bottom:20px; font-size:1.5rem; display:flex; align-items:center; gap:10px;">
+            <span id="category-icon">🇰🇷</span> <span id="category-name">국내 최신곡</span>
+        </h2>
+
+        <div id="music-list" class="list-grid">
+            <!-- Items loaded here -->
         </div>
 
-        <h2 class="section-title">✍️ 노래 추천하기</h2>
+        <h2 style="font-family:'Jua'; margin: 60px 0 20px; font-size:1.5rem;">✍️ 나만 아는 명곡 제보</h2>
         <section class="add-section">
             <div class="form-grid">
                 <input type="text" id="new-title" placeholder="곡 제목">
@@ -298,11 +232,6 @@
                 <button class="add-btn" onclick="addItem()">추천하기</button>
             </div>
         </section>
-
-        <h2 class="section-title">📋 플레이리스트</h2>
-        <div id="music-list" class="list-grid">
-            <!-- Items will be loaded here -->
-        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -319,32 +248,59 @@
 
         const defaults = {
             kpop: [
+                { title: "Magnetic", artist: "아일릿(ILLIT)", recommender: "관리자" },
+                { title: "Fate (나는 아픈 건 딱 질색이니까)", artist: "(여자)아이들", recommender: "관리자" },
                 { title: "밤양갱", artist: "비비(BIBI)", recommender: "관리자" },
                 { title: "Love wins all", artist: "아이유(IU)", recommender: "관리자" },
-                { title: "EASY", artist: "LE SSERAFIM", recommender: "관리자" }
+                { title: "첫 만남은 계획대로 되지 않아", artist: "TWS(투어스)", recommender: "관리자" },
+                { title: "EASY", artist: "LE SSERAFIM", recommender: "관리자" },
+                { title: "Plot Twist", artist: "TWS", recommender: "관리자" },
+                { title: "Smart", artist: "LE SSERAFIM", recommender: "관리자" },
+                { title: "To. X", artist: "태연 (TAEYEON)", recommender: "관리자" },
+                { title: "Wife", artist: "(여자)아이들", recommender: "관리자" }
             ],
             jpop: [
-                { title: "Idol", artist: "YOASOBI", recommender: "관리자" },
+                { title: "Idol (アイドル)", artist: "YOASOBI", recommender: "관리자" },
                 { title: "Bling-Bang-Bang-Born", artist: "Creepy Nuts", recommender: "관리자" },
-                { title: "Lemon", artist: "Kenshi Yonezu", recommender: "관리자" }
+                { title: "Lemon", artist: "Kenshi Yonezu", recommender: "관리자" },
+                { title: "First Love", artist: "Hikaru Utada", recommender: "관리자" },
+                { title: "Stay With Me", artist: "Miki Matsubara", recommender: "관리자" },
+                { title: "Racing into the Night (夜に駆ける)", artist: "YOASOBI", recommender: "관리자" },
+                { title: "Kick Back", artist: "Kenshi Yonezu", recommender: "관리자" },
+                { title: "Dry Flower", artist: "Yuuri", recommender: "관리자" },
+                { title: "Betelgeuse", artist: "Yuuri", recommender: "관리자" },
+                { title: "Subtitle", artist: "Official HIGE DANdism", recommender: "관리자" }
             ],
             pop: [
                 { title: "Cruel Summer", artist: "Taylor Swift", recommender: "관리자" },
                 { title: "vampire", artist: "Olivia Rodrigo", recommender: "관리자" },
-                { title: "Stay", artist: "The Kid LAROI & Justin Bieber", recommender: "관리자" }
+                { title: "Stay", artist: "The Kid LAROI & Justin Bieber", recommender: "관리자" },
+                { title: "Seven", artist: "Jungkook (feat. Latto)", recommender: "관리자" },
+                { title: "As It Was", artist: "Harry Styles", recommender: "관리자" },
+                { title: "Anti-Hero", artist: "Taylor Swift", recommender: "관리자" },
+                { title: "Flowers", artist: "Miley Cyrus", recommender: "관리자" },
+                { title: "Die For You", artist: "The Weeknd & Ariana Grande", recommender: "관리자" },
+                { title: "Greedy", artist: "Tate McRae", recommender: "관리자" },
+                { title: "Paint The Town Red", artist: "Doja Cat", recommender: "관리자" }
             ]
         };
 
         let currentType = 'kpop';
-        let currentPlaylist = [];
-        let currentIndex = -1;
-        let isPlaying = false;
 
         function switchTab(type) {
             currentType = type;
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(type));
-            });
+            
+            // UI Update
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const index = ['kpop', 'jpop', 'pop'].indexOf(type);
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            
+            const icons = { kpop: '🇰🇷', jpop: '🇯🇵', pop: '🇺🇸' };
+            const names = { kpop: '국내 최신곡', jpop: '인기 JPOP', pop: '글로벌 팝송' };
+            
+            document.getElementById('category-icon').innerText = icons[type];
+            document.getElementById('category-name').innerText = names[type];
+            
             loadData();
         }
 
@@ -355,7 +311,7 @@
             
             if(!title || !artist) return alert('제목과 가수를 입력해주세요!');
 
-            database.ref(`music_${currentType}`).push({
+            database.ref(`music_v2_${currentType}`).push({
                 title, artist, recommender,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
@@ -367,12 +323,9 @@
 
         function loadData() {
             const listEl = document.getElementById('music-list');
-            listEl.innerHTML = '';
+            listEl.innerHTML = '<p style="text-align:center; grid-column:1/-1; opacity:0.5;">불러오는 중...</p>';
             
-            // Combine defaults and firebase data
-            currentPlaylist = [...defaults[currentType]];
-            
-            database.ref(`music_${currentType}`).on('value', (snapshot) => {
+            database.ref(`music_v2_${currentType}`).on('value', (snapshot) => {
                 const data = snapshot.val();
                 let firebaseItems = [];
                 if(data) {
@@ -380,7 +333,6 @@
                 }
                 
                 const fullList = [...defaults[currentType], ...firebaseItems];
-                currentPlaylist = fullList;
                 renderList(fullList);
             });
         }
@@ -388,58 +340,27 @@
         function renderList(list) {
             const listEl = document.getElementById('music-list');
             listEl.innerHTML = '';
-            list.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = `music-card ${currentIndex === index ? 'playing' : ''}`;
-                card.onclick = () => selectSong(index);
+            
+            list.forEach((item) => {
+                const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(item.artist + " " + item.title)}`;
+                
+                const card = document.createElement('a');
+                card.href = searchUrl;
+                card.target = "_blank";
+                card.className = "music-card";
                 card.innerHTML = `
-                    <div class="mini-art">🎵</div>
+                    <div class="music-icon">🎵</div>
                     <div class="card-info">
                         <h3>${item.title}</h3>
                         <p>${item.artist} · ${item.recommender} 추천</p>
                     </div>
+                    <div class="play-indicator">GO ↗</div>
                 `;
                 listEl.appendChild(card);
             });
         }
 
-        function selectSong(index) {
-            currentIndex = index;
-            const song = currentPlaylist[index];
-            document.getElementById('player-title').innerText = song.title;
-            document.getElementById('player-artist').innerText = song.artist;
-            document.getElementById('player-art').innerText = '🎵'; // Placeholder for art
-            
-            isPlaying = true;
-            document.getElementById('play-btn').innerText = '⏸';
-            
-            // Highlight in list
-            renderList(currentPlaylist);
-        }
-
-        function togglePlay() {
-            if(currentIndex === -1) {
-                if(currentPlaylist.length > 0) selectSong(0);
-                return;
-            }
-            isPlaying = !isPlaying;
-            document.getElementById('play-btn').innerText = isPlaying ? '⏸' : '▶';
-        }
-
-        function nextSong() {
-            if(currentPlaylist.length === 0) return;
-            let nextIndex = currentIndex + 1;
-            if(nextIndex >= currentPlaylist.length) nextIndex = 0;
-            selectSong(nextIndex);
-        }
-
-        function prevSong() {
-            if(currentPlaylist.length === 0) return;
-            let prevIndex = currentIndex - 1;
-            if(prevIndex < 0) prevIndex = currentPlaylist.length - 1;
-            selectSong(prevIndex);
-        }
-
+        // Initialize
         loadData();
     </script>
 </body>
