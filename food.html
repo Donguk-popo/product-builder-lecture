@@ -25,7 +25,15 @@
         .tab-btn.coffee-tab { background: #f5f0ed; color: var(--coffee-primary); }
         .tab-btn.coffee-tab.active { background: var(--coffee-primary); color: white; transform: scale(1.05); }
 
-        h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; text-align: center; margin-top: 0; }
+        h1 { font-family: 'Jua', sans-serif; font-size: 2.5rem; text-align: center; margin-top: 0; word-break: keep-all; }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.5rem; }
+            .list-grid { grid-template-columns: 1fr; }
+            .tab-btn { padding: 10px 20px; font-size: 0.9rem; }
+        }
         
         .section-title { font-family: 'Jua'; font-size: 1.8rem; margin: 40px 0 20px; display: flex; align-items: center; gap: 10px; }
         

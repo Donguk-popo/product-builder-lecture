@@ -143,12 +143,19 @@
         .status-item span { color: var(--stec-blue); margin-right: 8px; }
 
         footer { text-align: center; padding: 40px; opacity: 0.6; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; letter-spacing: -1px; word-break: keep-all; }
+            .hero p { font-size: 1.1rem; word-break: keep-all; }
+            .status-bar { flex-direction: column; gap: 15px; align-items: flex-start; padding: 25px; }
+            .menu-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">STEC <span>SEMI 2nd</span></div>
+        <div class="logo" onclick="location.href='index.html'">STEC <span>SEMI 2nd</span></div>
     </nav>
 
     <div class="hero">

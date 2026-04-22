@@ -73,7 +73,7 @@
     </style>
 </head>
 <body>
-    <nav><div class="logo" style="font-weight: 800;">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
+    <nav><div class="logo" onclick="location.href='index.html'">STEC <span>SEMI 2nd</span></div><a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">홈으로</a></nav>
     <div class="container">
         <a href="index.html" class="back-btn">← 뒤로가기</a>
         <h1>☕ 화곡동 카페 리스트</h1>
@@ -196,6 +196,15 @@
 
         function addReview() {
             const text = document.getElementById('review-text').value; if (!text) return;
+            if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
+            state.reviews[currentActiveId].push(text); saveState(); renderReviews();
+            document.getElementById('review-text').value = '';
+        }
+        window.onclick = (e) => { if(e.target == document.getElementById('review-modal')) closeModal(); };
+        renderList();
+    </script>
+</body>
+</html>xt) return;
             if (!state.reviews[currentActiveId]) state.reviews[currentActiveId] = [];
             state.reviews[currentActiveId].push(text); saveState(); renderReviews();
             document.getElementById('review-text').value = '';
